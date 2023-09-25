@@ -10,7 +10,6 @@ public class Analyse extends Document {
         super(id, prix, taux, description);
         this.laboratoire = laboratoire;
     }
-
     public Analyse() {
     }
 

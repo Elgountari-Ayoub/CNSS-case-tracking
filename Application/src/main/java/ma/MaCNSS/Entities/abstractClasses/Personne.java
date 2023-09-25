@@ -7,6 +7,7 @@ public abstract class Personne {
     private String nom ;
     private String prenom ;
     private String ville ;
+    private String telephone ;
     private String email ;
     private String password ;
     private Genre genre ;
@@ -14,11 +15,12 @@ public abstract class Personne {
     public Personne() {
     }
 
-    public Personne(String CIN, String nom, String prenom, String ville, String email, String password, Genre genre) {
+    public Personne(String CIN, String nom, String prenom, String ville, String telephone, String email, String password, Genre genre) {
         this.CIN = CIN;
         this.nom = nom;
         this.prenom = prenom;
         this.ville = ville;
+        this.telephone = telephone;
         this.email = email;
         this.password = password;
         this.genre = genre;
@@ -78,5 +80,13 @@ public abstract class Personne {
 
     public void setGenre(Genre genre) {
         this.genre = genre;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 }
