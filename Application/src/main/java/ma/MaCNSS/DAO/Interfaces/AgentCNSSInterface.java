@@ -23,6 +23,6 @@ public interface AgentCNSSInterface {
 
     public AgentCNSS register(AgentCNSS agentCNSS)
             throws SQLException;
-    public AgentCNSS login(AgentCNSS agentCNSS)
+    public AgentCNSS findByEmail(AgentCNSS agentCNSS)
             throws SQLException;
 }

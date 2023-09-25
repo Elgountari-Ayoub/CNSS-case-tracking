@@ -6,8 +6,12 @@ import ma.MaCNSS.Entities.Personnes.AgentCNSS;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
+import ma.MaCNSS.enums.Genre;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class AgentCNSSImp implements AgentCNSSInterface {
     static Connection con = DBConnection.getConnection();
@@ -66,6 +70,52 @@ public class AgentCNSSImp implements AgentCNSSInterface {
 
     @Override
     public List<AgentCNSS> getAgentCNSSs() throws SQLException {
+        return null;
+    }
+
+    @Override
+    public AgentCNSS register(AgentCNSS agentCNSS) throws SQLException {
+
+        return null;
+    }
+    /*
+            *
+            * cnss SERIAL PRIMARY KEY,
+        nom VARCHAR(255),
+        prenom VARCHAR(255),
+        ville VARCHAR(255),
+        telephone VARCHAR(15),
+        email VARCHAR(255),
+        password VARCHAR(255),
+        genre VARCHAR(10)*/
+    @Override
+    public AgentCNSS findByEmail(AgentCNSS agentCNSS) throws SQLException {
+        String query = "SELECT * FROM agentCNSS WHERE email = ? ";
+        try{
+            PreparedStatement stmt = con.prepareStatement(query);
+            stmt.setString(1,agentCNSS.getEmail());
+            ResultSet result = stmt.executeQuery();
+            if(result.next()){
+                    AgentCNSS agent = new AgentCNSS();
+                    agent.setCIN(result.getString("cnss"));
+                    agent.setNom(result.getString("nom"));
+                    agent.setNom(result.getString("prenom"));
+                    agent.setPassword(result.getString("password"));
+                    agent.setEmail(result.getString("email"));
+                    agent.setTelephone(result.getString("telephone"));
+                    if (result.getString("genre").equals(Genre.HOMME.name()) ) {
+                        agent.setGenre(Genre.HOMME);
+                    }else {
+                        agent.setGenre(Genre.FEMME);
+                    }
+                    return agent ;
+            }else{
+                throw new SQLException("User not found");
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
         return null;
     }
 
