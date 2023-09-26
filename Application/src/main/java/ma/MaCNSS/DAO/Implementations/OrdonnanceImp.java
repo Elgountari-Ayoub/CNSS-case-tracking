@@ -1,12 +1,12 @@
 package ma.MaCNSS.DAO.Implementations;
 
 import ma.MaCNSS.Connection.DBConnection;
-import ma.MaCNSS.DAO.Interfaces.AgentCNSSInterface;
+
 import ma.MaCNSS.DAO.Interfaces.OrdonnanceInterface;
 import ma.MaCNSS.Entities.Documents.Ordonnance;
 import ma.MaCNSS.Entities.Dossier;
 import ma.MaCNSS.Entities.Organisme.Medcine;
-import ma.MaCNSS.Entities.Personnes.AgentCNSS;
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

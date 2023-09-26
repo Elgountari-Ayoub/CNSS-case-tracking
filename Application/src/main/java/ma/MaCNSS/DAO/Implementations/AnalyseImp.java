@@ -2,12 +2,9 @@ package ma.MaCNSS.DAO.Implementations;
 
 import ma.MaCNSS.Connection.DBConnection;
 import ma.MaCNSS.DAO.Interfaces.AnalyseInterface;
-import ma.MaCNSS.DAO.Interfaces.OrdonnanceInterface;
 import ma.MaCNSS.Entities.Documents.Analyse;
-import ma.MaCNSS.Entities.Documents.Ordonnance;
 import ma.MaCNSS.Entities.Dossier;
 import ma.MaCNSS.Entities.Organisme.Laboratoire;
-import ma.MaCNSS.Entities.Organisme.Medcine;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,9 +1,8 @@
 package ma.MaCNSS.DAO.Implementations;
 
 import ma.MaCNSS.Connection.DBConnection;
-import ma.MaCNSS.DAO.Interfaces.RadioInterface;
-
-import ma.MaCNSS.Entities.Documents.Radio;
+import ma.MaCNSS.DAO.Interfaces.ScannerInterface;
+import ma.MaCNSS.Entities.Documents.Scanner;
 import ma.MaCNSS.Entities.Dossier;
 import ma.MaCNSS.Entities.Organisme.Radiologie;
 
@@ -12,10 +11,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-public class RadioImp implements RadioInterface {
+public class ScannerImp implements ScannerInterface {
     static Connection con = DBConnection.getConnection();
     @Override
-    public boolean add(Radio radio, Dossier dossier, Radiologie radiologie) {
+    public boolean add(Scanner scanner, Dossier dossier, Radiologie radiologie) {
         String sql = "INSERT INTO analysee" +
                 " (radiologie_inpe, prix, taux, description, dossier_matricule, type) VALUES" +
                 " (?, ?, ?, ?, ?) ";
@@ -23,11 +22,11 @@ public class RadioImp implements RadioInterface {
             PreparedStatement ps = con.prepareStatement(sql);
 
             ps.setInt(1, radiologie.getINPE());
-            ps.setFloat(2, radio.getPrix());
-            ps.setFloat(3, radio.getTaux());
-            ps.setString(4, radio.getDescription());
+            ps.setFloat(2, scanner.getPrix());
+            ps.setFloat(3, scanner.getTaux());
+            ps.setString(4, scanner.getDescription());
             ps.setInt(5, dossier.getMatricule());
-            ps.setString(6, radio.getType());
+            ps.setString(6, scanner.getType());
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -40,7 +39,7 @@ public class RadioImp implements RadioInterface {
     }
 
     @Override
-    public boolean update(Radio radio) throws SQLException {
+    public boolean update(Scanner scanner) throws SQLException {
         return false;
     }
 
@@ -50,12 +49,13 @@ public class RadioImp implements RadioInterface {
     }
 
     @Override
-    public Radio getRadio(int id) throws SQLException {
+    public Scanner getScanner(int id) throws SQLException {
         return null;
     }
 
     @Override
-    public List<Radio> getRadios() throws SQLException {
+    public List<Scanner> getScanners() throws SQLException {
         return null;
     }
+
 }
