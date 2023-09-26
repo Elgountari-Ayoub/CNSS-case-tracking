@@ -5,10 +5,12 @@ import ma.MaCNSS.Entities.abstractClasses.Document;
 
 public class Analyse extends Document {
     private Laboratoire laboratoire ;
+    private String type;
 
-    public Analyse(int id, float prix, float taux, String description, Laboratoire laboratoire) {
+    public Analyse(int id, float prix, float taux, String description, Laboratoire laboratoire, String type) {
         super(id, prix, taux, description);
         this.laboratoire = laboratoire;
+        this.type = type;
     }
     public Analyse() {
     }
@@ -19,5 +21,13 @@ public class Analyse extends Document {
 
     public void setLaboratoire(Laboratoire laboratoire) {
         this.laboratoire = laboratoire;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
