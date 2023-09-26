@@ -1,7 +1,7 @@
-package ma.MaCNSS.DAO.Implementations;
+package ma.MaCNSS.DAO.Implementations.Person;
 
 import ma.MaCNSS.Connection.DBConnection;
-import ma.MaCNSS.DAO.Interfaces.AgentCNSSInterface;
+import ma.MaCNSS.DAO.Interfaces.Person.AgentCNSSInterface;
 import ma.MaCNSS.Entities.Personnes.AgentCNSS;
 
 import java.sql.Connection;
@@ -14,7 +14,6 @@ public class AgentCNSSImp implements AgentCNSSInterface {
 
     @Override
     public boolean add(AgentCNSS agentCNSS) {
-
         String sql = "INSERT INTO AgentCNSS" +
                 " (cnss, nom, prenom, ville, telephone, email, password, genre) VALUES" +
                 " (?, ?, ?, ?, ?, ?, ?, ?) ";
@@ -45,7 +44,7 @@ public class AgentCNSSImp implements AgentCNSSInterface {
     }
 
     @Override
-    public boolean delete(int id) throws SQLException {
+    public boolean delete(String cin) throws SQLException {
         return false;
     }
 

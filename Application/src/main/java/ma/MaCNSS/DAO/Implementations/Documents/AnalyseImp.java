@@ -1,10 +1,8 @@
-package ma.MaCNSS.DAO.Implementations;
+package ma.MaCNSS.DAO.Implementations.Documents;
 
 import ma.MaCNSS.Connection.DBConnection;
-import ma.MaCNSS.DAO.Interfaces.AnalyseInterface;
+import ma.MaCNSS.DAO.Interfaces.Documents.AnalyseInterface;
 import ma.MaCNSS.Entities.Documents.Analyse;
-import ma.MaCNSS.Entities.Dossier;
-import ma.MaCNSS.Entities.Organisme.Laboratoire;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,18 +12,18 @@ import java.util.List;
 public class AnalyseImp implements AnalyseInterface {
     static Connection con = DBConnection.getConnection();
     @Override
-    public boolean add(Analyse analyse, Dossier dossier, Laboratoire laboratoire) {
+    public boolean add(Analyse analyse) {
         String sql = "INSERT INTO analysee" +
                 " (laboratoire_inpe, prix, taux, description, dossier_matricule, type) VALUES" +
                 " (?, ?, ?, ?, ?) ";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
 
-            ps.setInt(1, laboratoire.getINPE());
+            ps.setInt(1, analyse.getLaboratoire().getINPE());
             ps.setFloat(2, analyse.getPrix());
             ps.setFloat(3, analyse.getTaux());
             ps.setString(4, analyse.getDescription());
-            ps.setInt(5, dossier.getMatricule());
+            ps.setInt(5, analyse.getDossier().getMatricule());
             ps.setString(6, analyse.getType());
 
             return ps.executeUpdate() > 0;

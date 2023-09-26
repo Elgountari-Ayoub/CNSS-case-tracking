@@ -1,4 +1,4 @@
-package ma.MaCNSS.DAO.Interfaces;
+package ma.MaCNSS.DAO.Interfaces.Person;
 
 import ma.MaCNSS.Entities.Personnes.AgentCNSS;
 
@@ -12,7 +12,7 @@ public interface AgentCNSSInterface {
     public boolean update(AgentCNSS agentCNSS)
             throws SQLException;
 
-    public boolean delete(int id)
+    public boolean delete(String cin)
             throws SQLException;
 
     public AgentCNSS getAgentCNSS(int id)

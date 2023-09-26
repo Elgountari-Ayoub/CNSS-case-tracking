@@ -1,10 +1,8 @@
-package ma.MaCNSS.DAO.Implementations;
+package ma.MaCNSS.DAO.Implementations.Documents;
 
 import ma.MaCNSS.Connection.DBConnection;
-import ma.MaCNSS.DAO.Interfaces.ScannerInterface;
+import ma.MaCNSS.DAO.Interfaces.Documents.ScannerInterface;
 import ma.MaCNSS.Entities.Documents.Scanner;
-import ma.MaCNSS.Entities.Dossier;
-import ma.MaCNSS.Entities.Organisme.Radiologie;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,23 +12,23 @@ import java.util.List;
 public class ScannerImp implements ScannerInterface {
     static Connection con = DBConnection.getConnection();
     @Override
-    public boolean add(Scanner scanner, Dossier dossier, Radiologie radiologie) {
-        String sql = "INSERT INTO analysee" +
+    public boolean add(Scanner scanner) {
+        String sql = "INSERT INTO scanner" +
                 " (radiologie_inpe, prix, taux, description, dossier_matricule, type) VALUES" +
                 " (?, ?, ?, ?, ?) ";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
 
-            ps.setInt(1, radiologie.getINPE());
+            ps.setInt(1, scanner.getRadiologie().getINPE());
             ps.setFloat(2, scanner.getPrix());
             ps.setFloat(3, scanner.getTaux());
             ps.setString(4, scanner.getDescription());
-            ps.setInt(5, dossier.getMatricule());
+            ps.setInt(5, scanner.getDossier().getMatricule());
             ps.setString(6, scanner.getType());
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
-            System.err.println("Error inserting Analyse: " + e.getMessage());
+            System.err.println("Error inserting Scanner: " + e.getMessage());
             return false;
         } catch (Exception e) {
             System.err.println("An exception: " + e.getMessage());

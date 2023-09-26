@@ -1,5 +1,6 @@
 package ma.MaCNSS.Entities.Documents;
 
+import ma.MaCNSS.Entities.Dossier;
 import ma.MaCNSS.Entities.Organisme.Laboratoire;
 import ma.MaCNSS.Entities.abstractClasses.Document;
 
@@ -7,8 +8,8 @@ public class Analyse extends Document {
     private Laboratoire laboratoire ;
     private String type;
 
-    public Analyse(int id, float prix, float taux, String description, Laboratoire laboratoire, String type) {
-        super(id, prix, taux, description);
+    public Analyse(int id, float prix, float taux, String description, Laboratoire laboratoire, String type, Dossier dossier) {
+        super(id, prix, taux, description, dossier);
         this.laboratoire = laboratoire;
         this.type = type;
     }

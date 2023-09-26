@@ -14,7 +14,7 @@ import java.util.List;
 public class DossierImp implements DossierInterface {
     static Connection con = DBConnection.getConnection();
     @Override
-    public boolean add(Dossier dossier, AgentCNSS agentCNSS, Patient patient) {
+    public boolean add(Dossier dossier) {
         String sql = "INSERT INTO dossier" +
                 " (matricule, etat, agentcnss_cin, patient_immatricule) VALUES" +
                 " (?, ?, ?, ?, ?) ";
@@ -23,8 +23,8 @@ public class DossierImp implements DossierInterface {
 
             ps.setInt(1,dossier.getMatricule());
             ps.setString(2, dossier.getEtat());
-            ps.setString(3, agentCNSS.getCIN());
-            ps.setString(4, patient.getImmatricule());
+            ps.setString(3, dossier.getAgentCNSS().getCIN());
+            ps.setString(4, dossier.getPatient().getImmatricule());
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -42,7 +42,7 @@ public class DossierImp implements DossierInterface {
     }
 
     @Override
-    public boolean delete(int id) throws SQLException {
+    public boolean delete(int matricule) throws SQLException {
         return false;
     }
 

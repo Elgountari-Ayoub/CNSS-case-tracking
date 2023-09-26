@@ -1,4 +1,4 @@
-package ma.MaCNSS.DAO.Interfaces;
+package ma.MaCNSS.DAO.Interfaces.Person;
 
 import ma.MaCNSS.Entities.Personnes.AgentCNSS;
 import ma.MaCNSS.Entities.Personnes.Patient;
@@ -13,7 +13,7 @@ public interface PatientInterface {
     public boolean update(Patient patient)
             throws SQLException;
 
-    public boolean delete(int id)
+    public boolean delete(String immatricule)
             throws SQLException;
 
     public Patient getPtient(int id)

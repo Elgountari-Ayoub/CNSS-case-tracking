@@ -5,6 +5,8 @@ import ma.MaCNSS.Entities.Documents.Ordonnance;
 import ma.MaCNSS.Entities.Documents.Radio;
 import ma.MaCNSS.Entities.Documents.Scanner;
 import ma.MaCNSS.Entities.Medicament.Medicament;
+import ma.MaCNSS.Entities.Personnes.AgentCNSS;
+import ma.MaCNSS.Entities.Personnes.Patient;
 
 import java.util.List;
 
@@ -18,6 +20,9 @@ public class Dossier {
     private List<Radio> radioList ;
     private List<Scanner> scannerList ;
 
+    private AgentCNSS agentCNSS;
+    private Patient patient;
+
     public List<Medicament> getMedicamentList() {
         return medicamentList;
     }
@@ -27,9 +32,11 @@ public class Dossier {
         this.medicamentList = medicamentList;
     }
 
-    public Dossier(int matricule, String etat) {
+    public Dossier(int matricule, String etat, AgentCNSS agentCNSS, Patient patient) {
         this.matricule = matricule;
         this.etat = etat;
+        this.agentCNSS = agentCNSS;
+        this.patient = patient;
     }
 
     public Dossier() {
@@ -81,5 +88,21 @@ public class Dossier {
 
     public void setScannerList(List<Scanner> scannerList) {
         this.scannerList = scannerList;
+    }
+
+    public AgentCNSS getAgentCNSS() {
+        return agentCNSS;
+    }
+
+    public void setAgentCNSS(AgentCNSS agentCNSS) {
+        this.agentCNSS = agentCNSS;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 }

@@ -1,11 +1,9 @@
-package ma.MaCNSS.DAO.Implementations;
+package ma.MaCNSS.DAO.Implementations.Documents;
 
 import ma.MaCNSS.Connection.DBConnection;
-import ma.MaCNSS.DAO.Interfaces.RadioInterface;
+import ma.MaCNSS.DAO.Interfaces.Documents.RadioInterface;
 
 import ma.MaCNSS.Entities.Documents.Radio;
-import ma.MaCNSS.Entities.Dossier;
-import ma.MaCNSS.Entities.Organisme.Radiologie;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,23 +13,23 @@ import java.util.List;
 public class RadioImp implements RadioInterface {
     static Connection con = DBConnection.getConnection();
     @Override
-    public boolean add(Radio radio, Dossier dossier, Radiologie radiologie) {
-        String sql = "INSERT INTO analysee" +
+    public boolean add(Radio radio) {
+        String sql = "INSERT INTO radio" +
                 " (radiologie_inpe, prix, taux, description, dossier_matricule, type) VALUES" +
                 " (?, ?, ?, ?, ?) ";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
 
-            ps.setInt(1, radiologie.getINPE());
+            ps.setInt(1, radio.getRadiologie().getINPE());
             ps.setFloat(2, radio.getPrix());
             ps.setFloat(3, radio.getTaux());
             ps.setString(4, radio.getDescription());
-            ps.setInt(5, dossier.getMatricule());
+            ps.setInt(5, radio.getDossier().getMatricule());
             ps.setString(6, radio.getType());
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
-            System.err.println("Error inserting Analyse: " + e.getMessage());
+            System.err.println("Error inserting Radio: " + e.getMessage());
             return false;
         } catch (Exception e) {
             System.err.println("An exception: " + e.getMessage());

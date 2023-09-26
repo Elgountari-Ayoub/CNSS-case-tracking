@@ -1,19 +1,23 @@
 package ma.MaCNSS.Entities.abstractClasses;
 
+import ma.MaCNSS.Entities.Dossier;
+
 public abstract class Document {
     private int id ;
     private float prix ;
     private float taux ;
     private String description ;
+    private Dossier dossier;
 
     public Document() {
     }
 
-    public Document(int id, float prix, float taux, String description) {
+    public Document(int id, float prix, float taux, String description, Dossier dossier) {
         this.id = id;
         this.prix = prix;
         this.taux = taux;
         this.description = description;
+        this.dossier = dossier;
     }
 
     public int getId() {
@@ -46,5 +50,13 @@ public abstract class Document {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Dossier getDossier() {
+        return dossier;
+    }
+
+    public void setDossier(Dossier dossier) {
+        this.dossier = dossier;
     }
 }

@@ -1,21 +1,24 @@
 package ma.MaCNSS.Entities.Organisme;
 
 import ma.MaCNSS.Entities.abstractClasses.Organisme;
+import ma.MaCNSS.enums.TypeMedcine;
 
 public class Medcine extends Organisme {
     private String nom ;
     private String prenom ;
+    private TypeMedcine typeMedcine;
 
 
     public Medcine() {
 
     }
 
-    public Medcine(int INPE, String adress, String nom, String prenom) {
+    public Medcine(int INPE, String adress, String nom, String prenom, TypeMedcine typeMedcine) {
         super(INPE, adress);
         this.nom = nom;
         this.prenom = prenom;
 
+        this.typeMedcine = typeMedcine;
     }
 
     public String getNom() {
@@ -35,4 +38,11 @@ public class Medcine extends Organisme {
     }
 
 
+    public TypeMedcine getTypeMedcine() {
+        return typeMedcine;
+    }
+
+    public void setTypeMedcine(TypeMedcine typeMedcine) {
+        this.typeMedcine = typeMedcine;
+    }
 }

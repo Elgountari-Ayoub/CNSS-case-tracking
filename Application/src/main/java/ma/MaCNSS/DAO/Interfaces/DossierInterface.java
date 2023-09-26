@@ -8,13 +8,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface DossierInterface {
-    public boolean add(Dossier dossier, AgentCNSS agentCNSS, Patient patient)
+    public boolean add(Dossier dossier)
             throws SQLException;
 
     public boolean update(Dossier dossier)
             throws SQLException;
 
-    public boolean delete(int id)
+    public boolean delete(int matricule)
             throws SQLException;
 
     public Dossier getDossier(int id)

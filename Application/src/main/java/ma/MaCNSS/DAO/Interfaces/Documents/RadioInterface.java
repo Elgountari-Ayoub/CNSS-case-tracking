@@ -1,4 +1,4 @@
-package ma.MaCNSS.DAO.Interfaces;
+package ma.MaCNSS.DAO.Interfaces.Documents;
 
 import ma.MaCNSS.Entities.Documents.Analyse;
 import ma.MaCNSS.Entities.Documents.Radio;
@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface RadioInterface {
-    public boolean add(Radio radio, Dossier dossier, Radiologie radiologie)
+    public boolean add(Radio radio)
             throws SQLException;
 
     public boolean update(Radio radio)

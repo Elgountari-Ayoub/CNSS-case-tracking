@@ -1,5 +1,6 @@
 package ma.MaCNSS.Entities.Documents;
 
+import ma.MaCNSS.Entities.Dossier;
 import ma.MaCNSS.Entities.Organisme.Radiologie;
 import ma.MaCNSS.Entities.abstractClasses.Document;
 
@@ -7,8 +8,8 @@ public class Radio extends Document {
     private String type ;
     private Radiologie radiologie ;
 
-    public Radio(int id, float prix, float taux, String description, String type) {
-        super(id, prix, taux, description);
+    public Radio(int id, float prix, float taux, String description, String type, Dossier dossier) {
+        super(id, prix, taux, description, dossier);
         this.type = type;
     }
 

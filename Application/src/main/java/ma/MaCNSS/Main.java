@@ -1,8 +1,6 @@
 package ma.MaCNSS;
 
-import ma.MaCNSS.DAO.Implementations.AgentCNSSImp;
-import ma.MaCNSS.DAO.Implementations.PatientImp;
-import ma.MaCNSS.Entities.Personnes.AgentCNSS;
+import ma.MaCNSS.DAO.Implementations.Person.PatientImp;
 import ma.MaCNSS.Entities.Personnes.Patient;
 import ma.MaCNSS.enums.Genre;
 

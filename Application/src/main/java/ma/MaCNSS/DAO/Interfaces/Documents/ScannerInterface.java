@@ -1,4 +1,4 @@
-package ma.MaCNSS.DAO.Interfaces;
+package ma.MaCNSS.DAO.Interfaces.Documents;
 
 import ma.MaCNSS.Entities.Documents.Scanner;
 import ma.MaCNSS.Entities.Dossier;
@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface ScannerInterface {
-    public boolean add(Scanner scanner, Dossier dossier, Radiologie radiologie)
+    public boolean add(Scanner scanner)
             throws SQLException;
 
     public boolean update(Scanner scanner)

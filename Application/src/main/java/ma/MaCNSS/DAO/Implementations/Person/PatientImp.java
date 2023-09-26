@@ -1,8 +1,7 @@
-package ma.MaCNSS.DAO.Implementations;
+package ma.MaCNSS.DAO.Implementations.Person;
 
 import ma.MaCNSS.Connection.DBConnection;
-import ma.MaCNSS.DAO.Interfaces.AgentCNSSInterface;
-import ma.MaCNSS.DAO.Interfaces.PatientInterface;
+import ma.MaCNSS.DAO.Interfaces.Person.PatientInterface;
 import ma.MaCNSS.Entities.Personnes.AgentCNSS;
 import ma.MaCNSS.Entities.Personnes.Patient;
 
@@ -34,7 +33,7 @@ public class PatientImp implements PatientInterface {
             ps.setString(9, patient.getGenre().toString());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
-            System.err.println("Error inserting AgentCNSS: " + e.getMessage());
+            System.err.println("Error inserting Patient: " + e.getMessage());
             return false;
         } catch (Exception e) {
             System.err.println("An exception: " + e.getMessage());
@@ -48,7 +47,7 @@ public class PatientImp implements PatientInterface {
     }
 
     @Override
-    public boolean delete(int id) throws SQLException {
+    public boolean delete(String immatricule) throws SQLException {
         return false;
     }
 

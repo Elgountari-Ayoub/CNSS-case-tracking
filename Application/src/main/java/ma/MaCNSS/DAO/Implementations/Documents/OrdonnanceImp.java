@@ -1,11 +1,10 @@
-package ma.MaCNSS.DAO.Implementations;
+package ma.MaCNSS.DAO.Implementations.Documents;
 
 import ma.MaCNSS.Connection.DBConnection;
 
-import ma.MaCNSS.DAO.Interfaces.OrdonnanceInterface;
+import ma.MaCNSS.DAO.Interfaces.Documents.OrdonnanceInterface;
+
 import ma.MaCNSS.Entities.Documents.Ordonnance;
-import ma.MaCNSS.Entities.Dossier;
-import ma.MaCNSS.Entities.Organisme.Medcine;
 
 
 import java.sql.Connection;
@@ -16,7 +15,7 @@ import java.util.List;
 public class OrdonnanceImp implements OrdonnanceInterface {
     static Connection con = DBConnection.getConnection();
     @Override
-    public boolean add(Ordonnance ordonnance, Dossier dossier, Medcine medcine) {
+    public boolean add(Ordonnance ordonnance) {
         String sql = "INSERT INTO ordonnance" +
                 " (prix, taux, description, dossier_matricule, medcine_inpe) VALUES" +
                 " (?, ?, ?, ?, ?) ";
@@ -26,8 +25,8 @@ public class OrdonnanceImp implements OrdonnanceInterface {
             ps.setFloat(1, ordonnance.getPrix());
             ps.setFloat(2, ordonnance.getTaux());
             ps.setString(3, ordonnance.getDescription());
-            ps.setInt(4, dossier.getMatricule());
-            ps.setInt(5, medcine.getINPE());
+            ps.setInt(4, ordonnance.getDossier().getMatricule());
+            ps.setInt(5, ordonnance.getMedcine().getINPE());
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {

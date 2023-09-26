@@ -1,27 +1,28 @@
-package ma.MaCNSS.DAO.Interfaces;
+package ma.MaCNSS.DAO.Interfaces.Documents;
 
+import ma.MaCNSS.Entities.Documents.Analyse;
 import ma.MaCNSS.Entities.Documents.Ordonnance;
 import ma.MaCNSS.Entities.Dossier;
+import ma.MaCNSS.Entities.Organisme.Laboratoire;
 import ma.MaCNSS.Entities.Organisme.Medcine;
-import ma.MaCNSS.Entities.Personnes.AgentCNSS;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public interface OrdonnanceInterface {
-    public boolean add(Ordonnance ordonnance, Dossier dossier, Medcine medcine)
+public interface AnalyseInterface {
+    public boolean add(Analyse analyse)
             throws SQLException;
 
-    public boolean update(Ordonnance ordonnance)
+    public boolean update(Analyse analyse)
             throws SQLException;
 
     public boolean delete(int id)
             throws SQLException;
 
-    public Ordonnance getOrdonnance(int id)
+    public Analyse getAnalyse(int id)
             throws SQLException;
 
-    public List<Ordonnance> getOrdonnances()
+    public List<Analyse> getAnalyses()
             throws SQLException;
 
 }
