@@ -15,16 +15,6 @@ public class AgentCNSSImp implements AgentCNSSInterface {
     @Override
     public boolean add(AgentCNSS agentCNSS) {
 
-        /*
-        *
-        * cnss SERIAL PRIMARY KEY,
-    nom VARCHAR(255),
-    prenom VARCHAR(255),
-    ville VARCHAR(255),
-    telephone VARCHAR(15),
-    email VARCHAR(255),
-    password VARCHAR(255),
-    genre VARCHAR(10)*/
         String sql = "INSERT INTO AgentCNSS" +
                 " (cnss, nom, prenom, ville, telephone, email, password, genre) VALUES" +
                 " (?, ?, ?, ?, ?, ?, ?, ?) ";

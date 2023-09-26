@@ -24,10 +24,10 @@ public class OrdonnanceImp implements OrdonnanceInterface {
             PreparedStatement ps = con.prepareStatement(sql);
 
             ps.setFloat(1, ordonnance.getPrix());
-            ps.setFloat(1, ordonnance.getTaux());
-            ps.setString(1, ordonnance.getDescription());
-            ps.setInt(1, dossier.getMatricule());
-            ps.setInt(1, medcine.getINPE());
+            ps.setFloat(2, ordonnance.getTaux());
+            ps.setString(3, ordonnance.getDescription());
+            ps.setInt(4, dossier.getMatricule());
+            ps.setInt(5, medcine.getINPE());
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
