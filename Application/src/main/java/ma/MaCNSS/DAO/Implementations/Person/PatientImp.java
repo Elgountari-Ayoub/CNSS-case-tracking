@@ -4,9 +4,11 @@ import ma.MaCNSS.Connection.DBConnection;
 import ma.MaCNSS.DAO.Interfaces.Person.PatientInterface;
 import ma.MaCNSS.Entities.Personnes.AgentCNSS;
 import ma.MaCNSS.Entities.Personnes.Patient;
+import ma.MaCNSS.enums.Genre;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -53,6 +55,36 @@ public class PatientImp implements PatientInterface {
 
     @Override
     public Patient getPtient(int id) throws SQLException {
+
+        String sql = "SELECT * FROM patient WHERE id = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+                String immatricule = resultSet.getString("immatricule");
+                String cin = resultSet.getString("CIN");
+                String nom = resultSet.getString("nom");
+                String prenom = resultSet.getString("prenom");
+                String ville = resultSet.getString("ville");
+                String telephone = resultSet.getString("telephone");
+                String email = resultSet.getString("email");
+                String password = resultSet.getString("password");
+                Genre genre = Genre.FEMME;
+                if (resultSet.getString("genre").equalsIgnoreCase(Genre.HOMME.name())){
+                     genre = Genre.HOMME;
+                };
+                return new Patient(immatricule, cin, nom, prenom, ville, telephone, email, password, genre);
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getting the member: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+
         return null;
     }
 
