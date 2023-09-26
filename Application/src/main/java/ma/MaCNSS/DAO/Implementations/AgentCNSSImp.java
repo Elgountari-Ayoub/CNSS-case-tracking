@@ -69,4 +69,14 @@ public class AgentCNSSImp implements AgentCNSSInterface {
         return null;
     }
 
+    @Override
+    public AgentCNSS register(AgentCNSS agentCNSS) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public AgentCNSS login(AgentCNSS agentCNSS) throws SQLException {
+        return null;
+    }
+
 }

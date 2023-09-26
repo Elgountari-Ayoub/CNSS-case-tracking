@@ -11,7 +11,7 @@ public class Patient  extends Personne {
         this.immatricule = immatricule;
     }
 
-    public Patient(String CIN, String nom, String prenom, String ville, String telephone, String email, String password, Genre genre, String immatricule) {
+    public Patient(String immatricule, String CIN, String nom, String prenom, String ville, String telephone, String email, String password, Genre genre) {
         super(CIN, nom, prenom, ville, telephone, email, password, genre);
         this.immatricule = immatricule;
     }
