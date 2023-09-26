@@ -34,7 +34,6 @@ public class AgentCNSSImp implements AgentCNSSInterface {
                 " (?, ?, ?, ?, ?, ?, ?, ?) ";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-
             ps.setString(1, agentCNSS.getCIN());
             ps.setString(2, agentCNSS.getNom());
             ps.setString(3, agentCNSS.getPrenom());
@@ -109,8 +108,6 @@ public class AgentCNSSImp implements AgentCNSSInterface {
                         agent.setGenre(Genre.FEMME);
                     }
                     return agent ;
-            }else{
-                throw new SQLException("User not found");
             }
 
         }catch (SQLException e){

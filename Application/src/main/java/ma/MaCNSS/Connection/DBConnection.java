@@ -8,7 +8,7 @@ public class DBConnection {
     private static final int DB_PORT = 5432;
     private static final String USERNAME = "postgres";
 
-    private static final String PASSWORD = "ESD2023";
+    private static final String PASSWORD = "root";
     private static final String DB_NAME = "maCNSSdb";
     public static Connection connection;
 
@@ -24,6 +24,7 @@ public class DBConnection {
     public static Connection getConnection() {
         if(connection == null)
             connection = new DBConnection().getConnection();
+
         return connection;
     }
 }
