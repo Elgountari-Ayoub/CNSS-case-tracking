@@ -61,7 +61,7 @@ public class RadiologieImp implements RadiologieInterface {
                 String adress = resultSet.getString("address");
                 String label = resultSet.getString("label");
 
-                return new Radiologie(adress, label);
+                return new Radiologie(inpe, adress, label);
             } else {
                 return null;
             }

@@ -8,7 +8,7 @@ public class Scanner extends Document {
     private String type ;
     private Radiologie radiologie ;
 
-    public Scanner(Radiologie radiologie, float prix, float taux, String description, Dossier dossier, String type ) {
+    public Scanner(Radiologie radiologie, float prix, float taux, String description, String type, Dossier dossier ) {
         super( prix, taux, description, dossier);
         this.type = type;
         this.radiologie = radiologie;
@@ -17,7 +17,7 @@ public class Scanner extends Document {
     }
 
     public String getType() {
-        return type;
+        return this.type;
     }
 
     public void setType(String type) {

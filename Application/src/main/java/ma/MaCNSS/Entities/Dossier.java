@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Dossier {
     private int matricule;
-    private Etat etat = Etat.ACCEPTER;
+    private Etat etat = Etat.ACCEPTED;
     private List<Medicament> medicamentList;
 
     private List<Analyse> analyseList;

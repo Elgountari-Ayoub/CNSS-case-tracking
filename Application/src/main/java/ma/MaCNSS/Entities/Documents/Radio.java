@@ -31,7 +31,7 @@ public class Radio extends Document {
     }
 
     public Radiologie getRadiologie() {
-        return radiologie;
+        return this.radiologie;
     }
 
     public void setRadiologie(Radiologie radiologie) {

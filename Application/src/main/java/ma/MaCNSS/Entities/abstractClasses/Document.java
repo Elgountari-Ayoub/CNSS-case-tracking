@@ -59,7 +59,7 @@ public abstract class Document {
     }
 
     public Dossier getDossier() {
-        return dossier;
+        return this.dossier;
     }
 
     public void setDossier(Dossier dossier) {

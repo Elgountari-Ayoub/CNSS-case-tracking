@@ -22,7 +22,7 @@ public class DossierImp implements DossierInterface {
     public boolean add(Dossier dossier) {
         String sql = "INSERT INTO dossier" +
                 " (matricule, etat, agentcnss_cin, patient_immatricule) VALUES" +
-                " (?, ?, ?, ?, ?) ";
+                " (?, ?, ?, ?) ";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
 
@@ -72,7 +72,7 @@ public class DossierImp implements DossierInterface {
                 PatientImp patientImp = new PatientImp();
                 Patient patient = patientImp.getPtient(patient_immatricule);
 
-                return new Dossier(Etat.valueOf(etat), agentCNSS, patient);
+                return new Dossier(matricule, Etat.valueOf(etat), agentCNSS, patient);
             } else {
                 return null;
             }

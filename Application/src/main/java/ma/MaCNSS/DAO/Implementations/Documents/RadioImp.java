@@ -7,6 +7,7 @@ import ma.MaCNSS.Entities.Documents.Radio;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -15,17 +16,16 @@ public class RadioImp implements RadioInterface {
     @Override
     public boolean add(Radio radio) {
         String sql = "INSERT INTO radio" +
-                " (radiologie_inpe, prix, taux, description, dossier_matricule, type) VALUES" +
+                " (radiologie_inpe, prix, description, dossier_matricule, type) VALUES" +
                 " (?, ?, ?, ?, ?) ";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
 
             ps.setString(1, radio.getRadiologie().getINPE());
             ps.setFloat(2, radio.getPrix());
-            ps.setFloat(3, radio.getTaux());
-            ps.setString(4, radio.getDescription());
-            ps.setInt(5, radio.getDossier().getMatricule());
-            ps.setString(6, radio.getType());
+            ps.setString(3, radio.getDescription());
+            ps.setInt(4, radio.getDossier().getMatricule());
+            ps.setString(5, radio.getType());
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -50,6 +50,28 @@ public class RadioImp implements RadioInterface {
     @Override
     public Radio getRadio(int id) throws SQLException {
         return null;
+    }
+
+    public float getRadioTauxByType(String type){
+        String sql = "Select taux from radioType where type = ?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, type);
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+                float taux = resultSet.getFloat("taux");
+                return taux;
+            } else {
+                return -1;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getting the radio taux: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+        return -1;
     }
 
     @Override

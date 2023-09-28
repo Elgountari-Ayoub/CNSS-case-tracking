@@ -1,5 +1,7 @@
 package ma.MaCNSS.Helpers;
 
+import ma.MaCNSS.enums.Etat;
+
 public class PmScanner {
 
     private static final java.util.Scanner scanner = new java.util.Scanner(System.in);
@@ -37,16 +39,16 @@ public class PmScanner {
         int inputValue = -1;
         do {
             try {
-                System.out.print(inputMessage + ": ");
+                System.out.print(inputMessage );
                 inputValue = scanner.nextInt();
                 scanner.nextLine();
             } catch (java.util.InputMismatchException e) {
                 scanner.next();
             }
-            if (inputValue < 1) {
+            if (inputValue < 0) {
                 System.out.println(TextColor.yellowText("invalid input(must be a positive number)!"));
             }
-        } while (inputValue < 1);
+        } while (inputValue < 0);
         return inputValue;
     }
 
@@ -74,11 +76,20 @@ public class PmScanner {
         } while (!response.equalsIgnoreCase("y") && !response.equalsIgnoreCase("n"));
         return response.equalsIgnoreCase("y");
     }
+
     public static String takeGender(String confirmationMessage) {
         String response;
         do {
             response = takeStringInputValue(confirmationMessage);
         } while (!response.equalsIgnoreCase("HOMME") && !response.equalsIgnoreCase("FEMME"));
         return response.toUpperCase();
+    }
+
+    public static Etat takeFolderStatus() {
+        String response;
+        do {
+            response = takeStringInputValue("Enter the Folder status: ");
+        } while (!response.equalsIgnoreCase("ACCEPTED") && !response.equalsIgnoreCase("PENDING") && !response.equalsIgnoreCase("REFUSED"));
+        return Etat.valueOf(response.toUpperCase());
     }
 }

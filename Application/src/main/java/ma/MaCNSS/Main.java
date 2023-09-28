@@ -88,10 +88,10 @@ public class Main {
                 case 2:
                     // => LOGIN
                     AgentCNSS agentCNSS = new AgentCNSS();
-                    agentCNSS = AgentServices.login();
-                    if (agentCNSS == null) {
-                        break;
-                    }
+//                    agentCNSS = AgentServices.login();
+//                    if (agentCNSS == null) {
+//                        break;
+//                    }
 
                     System.out.println("Welcom CNSS Agent 💪🏼");
 
@@ -104,9 +104,9 @@ public class Main {
                             case 1:
                                 dossier = DossierServices.add();
                                 if (agentCNSS != null) {
-                                    System.out.println(TextColor.greenText("L'agent bien ajoute"));
+                                    System.out.println(TextColor.greenText("Le dossier a etait bien ajoute"));
                                 } else {
-                                    System.err.println("L'agent pas ajoute");
+                                    System.err.println("Le dossier pas ajoute");
                                 }
                                 break;
                         }
@@ -184,7 +184,7 @@ public class Main {
             DossierImp dossierImp = new DossierImp();
             Dossier dossier = dossierImp.getDossier(dossier_matricule);
 
-            return new Scanner(radiologie, prix, taux, description, dossier, type);
+            return new Scanner(radiologie, prix, taux, description,type, dossier);
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
