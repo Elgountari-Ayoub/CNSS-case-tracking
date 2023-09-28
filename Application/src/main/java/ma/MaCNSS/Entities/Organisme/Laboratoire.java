@@ -6,7 +6,7 @@ public class Laboratoire extends Organisme {
     private String label ;
     
 
-    public Laboratoire(int INPE, String adress, String label) {
+    public Laboratoire(String INPE, String adress, String label) {
         super(INPE, adress);
         this.label = label;
     }

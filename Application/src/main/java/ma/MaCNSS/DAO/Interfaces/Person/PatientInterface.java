@@ -16,7 +16,13 @@ public interface PatientInterface {
     public boolean delete(String immatricule)
             throws SQLException;
 
-    public Patient getPtient(int id)
+    public Patient getPtient(String immatricule)
+            throws SQLException;
+
+    public Patient findByEmail (String  email)
+            throws SQLException;
+
+    public Patient getPtientDossiers(String immatricule)
             throws SQLException;
 
     public List<Patient> getPatient()

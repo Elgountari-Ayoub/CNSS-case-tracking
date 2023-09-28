@@ -26,7 +26,7 @@ public class OrdonnanceImp implements OrdonnanceInterface {
             ps.setFloat(2, ordonnance.getTaux());
             ps.setString(3, ordonnance.getDescription());
             ps.setInt(4, ordonnance.getDossier().getMatricule());
-            ps.setInt(5, ordonnance.getMedcine().getINPE());
+            ps.setString(5, ordonnance.getMedcine().getINPE());
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {

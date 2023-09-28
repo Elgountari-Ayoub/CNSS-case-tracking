@@ -13,6 +13,12 @@ public class Radio extends Document {
         this.type = type;
     }
 
+    public Radio(Radiologie radiologie, float prix, float taux, String description, String type, Dossier dossier) {
+        super(prix, taux, description, dossier);
+        this.type = type;
+        this.radiologie = radiologie;
+    }
+
     public Radio() {
     }
 

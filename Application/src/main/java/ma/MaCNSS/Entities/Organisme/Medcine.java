@@ -13,7 +13,7 @@ public class Medcine extends Organisme {
 
     }
 
-    public Medcine(int INPE, String adress, String nom, String prenom, TypeMedcine typeMedcine) {
+    public Medcine(String INPE, String adress, String nom, String prenom, TypeMedcine typeMedcine) {
         super(INPE, adress);
         this.nom = nom;
         this.prenom = prenom;

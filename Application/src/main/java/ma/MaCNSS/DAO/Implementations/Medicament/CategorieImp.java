@@ -3,9 +3,11 @@ package ma.MaCNSS.DAO.Implementations.Medicament;
 import ma.MaCNSS.Connection.DBConnection;
 import ma.MaCNSS.DAO.Interfaces.Medicament.CategorieInterface;
 import ma.MaCNSS.Entities.Medicament.Categorie;
+import ma.MaCNSS.Entities.Organisme.Radiologie;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -44,6 +46,28 @@ public class CategorieImp implements CategorieInterface {
 
     @Override
     public Categorie getCategorie(int id) throws SQLException {
+        return null;
+    }
+    public Categorie getCategorie(String label) throws SQLException {
+        String sql = "SELECT * FROM categorie WHERE label = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, label);
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                float taux = resultSet.getFloat("taux");
+
+                return new Categorie(id, taux, label);
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getting the categorie: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+        }
         return null;
     }
 

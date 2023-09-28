@@ -8,12 +8,11 @@ public class Scanner extends Document {
     private String type ;
     private Radiologie radiologie ;
 
-    public Scanner(int id, float prix, float taux, String description, String type, Radiologie radiologie, Dossier dossier) {
-        super(id, prix, taux, description, dossier);
+    public Scanner(Radiologie radiologie, float prix, float taux, String description, Dossier dossier, String type ) {
+        super( prix, taux, description, dossier);
         this.type = type;
         this.radiologie = radiologie;
     }
-
     public Scanner() {
     }
 

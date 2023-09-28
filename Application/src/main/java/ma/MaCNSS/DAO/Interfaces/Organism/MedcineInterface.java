@@ -16,7 +16,7 @@ public interface MedcineInterface {
     public boolean delete(int id)
             throws SQLException;
 
-    public Medcine getMedcine(int id)
+    public Medcine getMedcine(String inpe)
             throws SQLException;
 
     public List<Medcine> getMedcines()

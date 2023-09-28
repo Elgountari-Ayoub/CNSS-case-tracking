@@ -18,6 +18,14 @@ public class Medicament {
         this.categorie = categorie;
     }
 
+    public Medicament(float prix, String label, Dossier dossier, Categorie categorie) {
+        this.code_barre = code_barre;
+        this.prix = prix;
+        this.label = label;
+        this.dossier = dossier;
+        this.categorie = categorie;
+    }
+
     public Medicament() {
     }
 

@@ -3,14 +3,17 @@ package ma.MaCNSS.DAO.Implementations.Organism;
 import ma.MaCNSS.Connection.DBConnection;
 import ma.MaCNSS.DAO.Interfaces.Organism.LaboratoireInterface;
 import ma.MaCNSS.Entities.Organisme.Laboratoire;
+import ma.MaCNSS.Entities.Organisme.Radiologie;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 public class LaboratoireImp implements LaboratoireInterface {
     static Connection con = DBConnection.getConnection();
+
     @Override
     public boolean add(Laboratoire laboratoire) {
         String sql = "INSERT INTO laboratoire" +
@@ -18,8 +21,7 @@ public class LaboratoireImp implements LaboratoireInterface {
                 " (?, ?, ?) ";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-
-            ps.setInt(1, laboratoire.getINPE());
+            ps.setString(1, laboratoire.getINPE());
             ps.setString(2, laboratoire.getAdress());
             ps.setString(3, laboratoire.getLabel());
 
@@ -44,7 +46,27 @@ public class LaboratoireImp implements LaboratoireInterface {
     }
 
     @Override
-    public Laboratoire getLaboratoire(int id) throws SQLException {
+    public Laboratoire getLaboratoire(String inpe) throws SQLException {
+        String sql = "SELECT * FROM laboratoire WHERE inpe = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, inpe);
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+                String adress, label;
+                adress = resultSet.getString("address");
+                label = resultSet.getString("label");
+
+                return new Laboratoire(inpe, adress, label);
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getting the radiologie: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+        }
         return null;
     }
 

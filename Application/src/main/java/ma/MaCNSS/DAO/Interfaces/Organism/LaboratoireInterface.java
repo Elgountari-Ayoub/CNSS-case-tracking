@@ -16,7 +16,7 @@ public interface LaboratoireInterface {
     public boolean delete(int id)
             throws SQLException;
 
-    public Laboratoire getLaboratoire(int id)
+    public Laboratoire getLaboratoire(String inpe)
             throws SQLException;
 
     public List<Laboratoire> getLaboratoires()

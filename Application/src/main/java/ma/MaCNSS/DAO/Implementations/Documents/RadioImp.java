@@ -20,7 +20,7 @@ public class RadioImp implements RadioInterface {
         try {
             PreparedStatement ps = con.prepareStatement(sql);
 
-            ps.setInt(1, radio.getRadiologie().getINPE());
+            ps.setString(1, radio.getRadiologie().getINPE());
             ps.setFloat(2, radio.getPrix());
             ps.setFloat(3, radio.getTaux());
             ps.setString(4, radio.getDescription());

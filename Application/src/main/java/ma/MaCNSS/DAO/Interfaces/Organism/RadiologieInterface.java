@@ -1,6 +1,6 @@
 package ma.MaCNSS.DAO.Interfaces.Organism;
 
-import ma.MaCNSS.Entities.Organisme.Laboratoire;
+
 import ma.MaCNSS.Entities.Organisme.Radiologie;
 
 import java.sql.SQLException;
@@ -16,7 +16,7 @@ public interface RadiologieInterface {
     public boolean delete(String inpe)
             throws SQLException;
 
-    public Laboratoire getRadiologie(int id)
+    public Radiologie getRadiologie(String inpe)
             throws SQLException;
 
     public List<Radiologie> getRadiologies()

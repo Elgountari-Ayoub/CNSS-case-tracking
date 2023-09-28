@@ -15,14 +15,19 @@ public interface AgentCNSSInterface {
     public boolean delete(String cin)
             throws SQLException;
 
-    public AgentCNSS getAgentCNSS(int id)
+    public AgentCNSS getAgentCNSS(String cin)
             throws SQLException;
 
     public List<AgentCNSS> getAgentCNSSs()
             throws SQLException;
 
+    public AgentCNSS findByEmail (String  email)
+            throws SQLException;
+
+
     public AgentCNSS register(AgentCNSS agentCNSS)
             throws SQLException;
+
     public AgentCNSS login(AgentCNSS agentCNSS)
             throws SQLException;
 }

@@ -7,8 +7,7 @@ public class Patient  extends Personne {
     private String immatricule ;
 
 
-    public Patient(String immatricule) {
-        this.immatricule = immatricule;
+    public Patient() {
     }
 
     public Patient(String immatricule, String CIN, String nom, String prenom, String ville, String telephone, String email, String password, Genre genre) {

@@ -19,7 +19,7 @@ public class ScannerImp implements ScannerInterface {
         try {
             PreparedStatement ps = con.prepareStatement(sql);
 
-            ps.setInt(1, scanner.getRadiologie().getINPE());
+            ps.setString(1, scanner.getRadiologie().getINPE());
             ps.setFloat(2, scanner.getPrix());
             ps.setFloat(3, scanner.getTaux());
             ps.setString(4, scanner.getDescription());

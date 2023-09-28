@@ -1,22 +1,25 @@
 package ma.MaCNSS.Entities.abstractClasses;
 
 public abstract class Organisme {
-    private int INPE ;
+    private String INPE ;
     private String adress ;
 
     public Organisme() {
     }
 
-    public Organisme(int INPE, String adress) {
+    public Organisme(String INPE, String adress) {
         this.INPE = INPE;
         this.adress = adress;
     }
+    public Organisme(String adress) {
+        this.adress = adress;
+    }
 
-    public int getINPE() {
+    public String getINPE() {
         return INPE;
     }
 
-    public void setINPE(int INPE) {
+    public void setINPE(String INPE) {
         this.INPE = INPE;
     }
 

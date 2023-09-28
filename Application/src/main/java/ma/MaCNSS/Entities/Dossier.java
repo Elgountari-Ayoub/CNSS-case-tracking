@@ -7,18 +7,19 @@ import ma.MaCNSS.Entities.Documents.Scanner;
 import ma.MaCNSS.Entities.Medicament.Medicament;
 import ma.MaCNSS.Entities.Personnes.AgentCNSS;
 import ma.MaCNSS.Entities.Personnes.Patient;
+import ma.MaCNSS.enums.Etat;
 
 import java.util.List;
 
 public class Dossier {
-    private  int matricule ;
-    private String etat ;
-    private List<Medicament> medicamentList ;
+    private int matricule;
+    private Etat etat = Etat.ACCEPTER;
+    private List<Medicament> medicamentList;
 
-    private List<Analyse> analyseList ;
-    private List<Ordonnance> ordonnanceList ;
-    private List<Radio> radioList ;
-    private List<Scanner> scannerList ;
+    private List<Analyse> analyseList;
+    private List<Ordonnance> ordonnanceList;
+    private List<Radio> radioList;
+    private List<Scanner> scannerList;
 
     private AgentCNSS agentCNSS;
     private Patient patient;
@@ -32,8 +33,14 @@ public class Dossier {
         this.medicamentList = medicamentList;
     }
 
-    public Dossier(int matricule, String etat, AgentCNSS agentCNSS, Patient patient) {
+    public Dossier(int matricule, Etat etat, AgentCNSS agentCNSS, Patient patient) {
         this.matricule = matricule;
+        this.etat = etat;
+        this.agentCNSS = agentCNSS;
+        this.patient = patient;
+    }
+
+    public Dossier(Etat etat, AgentCNSS agentCNSS, Patient patient) {
         this.etat = etat;
         this.agentCNSS = agentCNSS;
         this.patient = patient;
@@ -42,11 +49,11 @@ public class Dossier {
     public Dossier() {
     }
 
-    public String getEtat() {
+    public Etat getEtat() {
         return etat;
     }
 
-    public void setEtat(String etat) {
+    public void setEtat(Etat etat) {
         this.etat = etat;
     }
 

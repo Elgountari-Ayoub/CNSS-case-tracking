@@ -13,6 +13,11 @@ public class Ordonnance extends Document {
         this.medcine = medcine;
     }
 
+    public Ordonnance(float prix, float taux, String description, Medcine medcine, Dossier dossier) {
+        super(prix, taux, description, dossier);
+        this.medcine = medcine;
+    }
+
     public Ordonnance() {
     }
 

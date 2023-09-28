@@ -4,9 +4,12 @@ import ma.MaCNSS.Connection.DBConnection;
 import ma.MaCNSS.DAO.Interfaces.Organism.MedcineInterface;
 import ma.MaCNSS.Entities.Organisme.Laboratoire;
 import ma.MaCNSS.Entities.Organisme.Medcine;
+import ma.MaCNSS.enums.Genre;
+import ma.MaCNSS.enums.TypeMedcine;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -20,7 +23,7 @@ public class MedcineImp implements MedcineInterface {
         try {
             PreparedStatement ps = con.prepareStatement(sql);
 
-            ps.setInt(1, medcine.getINPE());
+            ps.setString(1, medcine.getINPE());
             ps.setString(2, medcine.getAdress());
             ps.setString(3, medcine.getNom());
             ps.setString(4, medcine.getPrenom());
@@ -47,7 +50,33 @@ public class MedcineImp implements MedcineInterface {
     }
 
     @Override
-    public Medcine getMedcine(int id) throws SQLException {
+    public Medcine getMedcine(String inpe) throws SQLException  {
+        String sql = "SELECT * FROM medcine WHERE inpe = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, inpe);
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+                String adress, nom, prenom, type;
+                adress = resultSet.getString("address");
+                nom = resultSet.getString("nom");
+                prenom = resultSet.getString("prenom");
+                type = resultSet.getString("type");
+
+                TypeMedcine typeMedcine = TypeMedcine.GENERALSITE;
+                if (type.equalsIgnoreCase(TypeMedcine.SPECIALISTE.toString())){
+                    typeMedcine = TypeMedcine.SPECIALISTE;
+                };
+                return new Medcine(inpe, adress, nom, prenom, typeMedcine);
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getting the radiologie: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+        }
         return null;
     }
 

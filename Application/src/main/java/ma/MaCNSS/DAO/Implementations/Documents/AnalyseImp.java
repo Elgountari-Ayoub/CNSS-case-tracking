@@ -19,7 +19,7 @@ public class AnalyseImp implements AnalyseInterface {
         try {
             PreparedStatement ps = con.prepareStatement(sql);
 
-            ps.setInt(1, analyse.getLaboratoire().getINPE());
+            ps.setString(1, analyse.getLaboratoire().getINPE());
             ps.setFloat(2, analyse.getPrix());
             ps.setFloat(3, analyse.getTaux());
             ps.setString(4, analyse.getDescription());

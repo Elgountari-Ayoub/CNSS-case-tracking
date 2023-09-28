@@ -19,8 +19,8 @@ public class PatientImp implements PatientInterface {
     public boolean add(Patient patient) {
 
         String sql = "INSERT INTO Patient" +
-        " (immatricule, cnss, nom, prenom, ville, telephone, email, password, genre) VALUES" +
-        " (?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+                " (immatricule, cin, nom, prenom, ville, telephone, email, password, genre) VALUES" +
+                " (?, ?, ?, ?, ?, ?, ?, ?, ?) ";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
 
@@ -54,17 +54,15 @@ public class PatientImp implements PatientInterface {
     }
 
     @Override
-    public Patient getPtient(int id) throws SQLException {
-
-        String sql = "SELECT * FROM patient WHERE id = ?";
+    public Patient getPtient(String immatricule) throws SQLException {
+        String sql = "SELECT * FROM patient WHERE immatricule = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setString(1, immatricule);
             ResultSet resultSet = ps.executeQuery();
 
             if (resultSet.next()) {
-                String immatricule = resultSet.getString("immatricule");
-                String cin = resultSet.getString("CIN");
+                String cin = resultSet.getString("cin");
                 String nom = resultSet.getString("nom");
                 String prenom = resultSet.getString("prenom");
                 String ville = resultSet.getString("ville");
@@ -72,9 +70,10 @@ public class PatientImp implements PatientInterface {
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
                 Genre genre = Genre.FEMME;
-                if (resultSet.getString("genre").equalsIgnoreCase(Genre.HOMME.name())){
-                     genre = Genre.HOMME;
-                };
+                if (resultSet.getString("genre").equalsIgnoreCase(Genre.HOMME.name())) {
+                    genre = Genre.HOMME;
+                }
+                ;
                 return new Patient(immatricule, cin, nom, prenom, ville, telephone, email, password, genre);
             } else {
                 return null;
@@ -89,9 +88,45 @@ public class PatientImp implements PatientInterface {
     }
 
     @Override
+    public Patient findByEmail(String email) throws SQLException {
+        String query = "SELECT * FROM patient WHERE email = ? ";
+        try {
+            PreparedStatement stmt = con.prepareStatement(query);
+            stmt.setString(1, email);
+            ResultSet result = stmt.executeQuery();
+            if (result.next()) {
+                Patient patient = new Patient();
+                patient.setImmatricule(result.getString("immatricule"));
+                patient.setCIN(result.getString("cin"));
+                patient.setNom(result.getString("nom"));
+                patient.setNom(result.getString("prenom"));
+                patient.setEmail(result.getString("email"));
+                patient.setPassword(result.getString("password"));
+                patient.setTelephone(result.getString("telephone"));
+                Genre genre =  Genre.valueOf(result.getString("genre"));
+                patient.setGenre(genre);
+                return patient;
+            } else {
+                throw new SQLException("User not found");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    @Override
+    public Patient getPtientDossiers(String immatricule) throws SQLException {
+        return null;
+    }
+
+    @Override
     public List<Patient> getPatient() throws SQLException {
         return null;
     }
+
 
     @Override
     public AgentCNSS login(Patient patient) throws SQLException {
