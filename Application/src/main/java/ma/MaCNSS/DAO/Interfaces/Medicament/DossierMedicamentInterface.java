@@ -1,24 +1,22 @@
 package ma.MaCNSS.DAO.Interfaces.Medicament;
 
 import ma.MaCNSS.Entities.Documents.Radio;
-import ma.MaCNSS.Entities.Dossier;
+import ma.MaCNSS.Entities.Medicament.DossierMedicament;
 import ma.MaCNSS.Entities.Medicament.Medicament;
-import ma.MaCNSS.Entities.Organisme.Radiologie;
 
-import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface MedicamentInterface {
-    public boolean add(Medicament medicament)
+public interface DossierMedicamentInterface {
+    public boolean add(DossierMedicament dossierMedicament)
             throws SQLException;
-    public boolean update(Medicament medicament)
+    public boolean update(DossierMedicament dossierMedicament)
             throws SQLException;
     public boolean delete(String code_bare)
             throws SQLException;
-    public Medicament getMedicament(String code_bare)
+    public DossierMedicament getDossierMedicament(String code_bare)
             throws SQLException;
-    public List<Radio> getMedicaments()
+    public List<DossierMedicament> getDossierMedicaments()
             throws SQLException;
 
 }

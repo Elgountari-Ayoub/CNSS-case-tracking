@@ -23,4 +23,5 @@ public interface DossierInterface {
     public List<Dossier> getDossiers()
             throws SQLException;
 
+    public boolean setRemboursement(Dossier dossier) throws SQLException;;
 }

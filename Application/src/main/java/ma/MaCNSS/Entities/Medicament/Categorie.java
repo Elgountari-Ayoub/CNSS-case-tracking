@@ -3,13 +3,11 @@ package ma.MaCNSS.Entities.Medicament;
 import java.util.List;
 
 public class Categorie {
-    private int id ;
     private float taux ;
     private String label ;
     private List<Medicament> medicamentList ;
 
-    public Categorie(int id, float taux, String label) {
-        this.id = id;
+    public Categorie( float taux, String label) {
         this.taux = taux;
         this.label = label;
     }
@@ -17,16 +15,8 @@ public class Categorie {
     public Categorie() {
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public float getTaux() {
-        return taux;
+        return this.taux;
     }
 
     public void setTaux(float taux) {
@@ -34,7 +24,7 @@ public class Categorie {
     }
 
     public String getLabel() {
-        return label;
+        return this.label;
     }
 
     public void setLabel(String label) {

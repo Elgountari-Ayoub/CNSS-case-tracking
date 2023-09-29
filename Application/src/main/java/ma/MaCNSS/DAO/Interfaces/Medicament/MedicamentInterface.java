@@ -18,7 +18,7 @@ public interface MedicamentInterface {
             throws SQLException;
     public Medicament getMedicament(String code_bare)
             throws SQLException;
-    public List<Radio> getMedicaments()
+    public List<Medicament> getMedicaments()
             throws SQLException;
 
 }

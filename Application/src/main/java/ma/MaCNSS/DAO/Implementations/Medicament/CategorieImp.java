@@ -56,10 +56,9 @@ public class CategorieImp implements CategorieInterface {
             ResultSet resultSet = ps.executeQuery();
 
             if (resultSet.next()) {
-                int id = resultSet.getInt("id");
                 float taux = resultSet.getFloat("taux");
 
-                return new Categorie(id, taux, label);
+                return new Categorie(taux, label);
             } else {
                 return null;
             }

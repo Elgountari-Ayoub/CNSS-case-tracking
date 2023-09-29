@@ -6,6 +6,8 @@ import ma.MaCNSS.DAO.Implementations.Documents.OrdonnanceImp;
 import ma.MaCNSS.DAO.Implementations.Documents.RadioImp;
 import ma.MaCNSS.DAO.Implementations.Documents.ScannerImp;
 import ma.MaCNSS.DAO.Implementations.DossierImp;
+import ma.MaCNSS.DAO.Implementations.Medicament.DossierMedicamentImp;
+import ma.MaCNSS.DAO.Implementations.Medicament.MedicamentImp;
 import ma.MaCNSS.DAO.Implementations.Organism.LaboratoireImp;
 import ma.MaCNSS.DAO.Implementations.Organism.MedcineImp;
 import ma.MaCNSS.DAO.Implementations.Organism.RadiologieImp;
@@ -15,6 +17,8 @@ import ma.MaCNSS.Entities.Documents.Analyse;
 import ma.MaCNSS.Entities.Documents.Ordonnance;
 import ma.MaCNSS.Entities.Documents.Radio;
 import ma.MaCNSS.Entities.Dossier;
+import ma.MaCNSS.Entities.Medicament.DossierMedicament;
+import ma.MaCNSS.Entities.Medicament.Medicament;
 import ma.MaCNSS.Entities.Organisme.Laboratoire;
 import ma.MaCNSS.Entities.Organisme.Medcine;
 import ma.MaCNSS.Entities.Organisme.Radiologie;
@@ -32,10 +36,18 @@ public class DossierServices {
 
         //Create a folder(Dossier)
         try {
-            Dossier dossier = new Dossier();
-            int matricule = PmScanner.takeIntInputValue("Enter the Folder matricule: ");
-            Etat etat = PmScanner.takeFolderStatus();// etat de dossier
+            DossierImp dossierImp = new DossierImp();
+            Dossier dossier;
+            int matricule;
+            do {
+                matricule = PmScanner.takeIntInputValue("Enter the Folder matricule: ");
+                dossier = dossierImp.getDossier(matricule);
+                if (dossier != null) {
+                    System.out.println("There is a dossier with the same matricule, Try another one");
+                }
+            }while(dossier != null);
 
+                Etat etat = PmScanner.takeFolderStatus();// etat de dossier
             Patient patient;
             do {
                 String immatricule = PmScanner.takeStringInputValue("Enter the patient immatricule: ");
@@ -56,34 +68,47 @@ public class DossierServices {
                 }
             }while(agentCNSS == null);
 
-            DossierImp dossierImp = new DossierImp();
-
+            // DOSIER
             dossier = new Dossier(matricule, etat, agentCNSS, patient);
-            if (!dossierImp.add(dossier)){
-                System.err.println("Error saving the patient folder");
-            }
+            dossierImp.add(dossier);
+
             //SCANNER
-            takeScannerData(dossier.getMatricule());
+            float scannerRemb =  takeScannerData(dossier.getMatricule());
+            System.out.println("scanner => " + scannerRemb);
             //RADIO
-            takeRadioData(dossier.getMatricule());
+            float radioRemb =  takeRadioData(dossier.getMatricule());
+            System.out.println("Radio => " + radioRemb);
             //ANALYSE
-            takeAnalyseData(dossier.getMatricule());
+            float analyseRemb =  takeAnalyseData(dossier.getMatricule());
+            System.out.println("Analyse => " + analyseRemb);
             //ORDONNANCE
-            takeOrdonnanceData(dossier.getMatricule());
+            float ordonnanceRemb =  takeOrdonnanceData(dossier.getMatricule());
+            System.out.println("Ordonnance => " + ordonnanceRemb);
+            // DOSSIER MEDICAMENT
+            float medicamentRemb = takeMedicamentData(dossier.getMatricule());
+            System.out.println("Medicament => " + medicamentRemb);
 
-            System.out.println(TextColor.greenText("Keep going bro"));
+            float dossierRemb = scannerRemb + radioRemb + analyseRemb + ordonnanceRemb + medicamentRemb;
+            System.out.println(TextColor.greenText("Dossier => " + dossierRemb));
 
+            dossier.setRemboursement(dossierRemb);
+
+            if (dossierImp.setRemboursement(dossier)){
+                System.out.println("remboursement saved successfully");
+            }
+            else {
+                System.out.println(TextColor.yellowText("error occured while trying to save the remboursement!"));
+            }
             return dossier;
         }catch (Exception ex){
             System.err.println(ex.getMessage());
         }
-        // Scanner count
-        float totalPrice = 0;
         return null;
     }
 
     // Scanner
-    public static void takeScannerData(int dossier_matricule) {
+    public static float takeScannerData(int dossier_matricule) {
+        float finalPrice = 0;
         try {
             Scanner scanner;
             ScannerImp scannerImp = new ScannerImp();
@@ -94,8 +119,6 @@ public class DossierServices {
             int scannerCount = PmScanner.takeIntInputValue("Enter Scanner count: ");
             for (int i = 0; i < scannerCount; i++) {
                 System.out.println("Enter scanner " + Integer.toString(i+1) + " infos:");
-
-
                 Radiologie radiologie;
                 do {
                     radiologie_inpe = PmScanner.takeStringInputValue("Enter the radiology INPE: ");
@@ -117,6 +140,8 @@ public class DossierServices {
                 description = PmScanner.takeStringInputValue("Enter the description: ");
                 prix = PmScanner.takeIntInputValue("Enter the price: ");
 
+                finalPrice += (prix * taux) / 100;
+
                 DossierImp dossierImp = new DossierImp();
                 Dossier dossier = dossierImp.getDossier(dossier_matricule);
                 scanner = new Scanner(radiologie, prix, taux, description, type, dossier);
@@ -126,9 +151,11 @@ public class DossierServices {
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
+        return finalPrice;
     }
 
-    public static void takeRadioData(int dossier_matricule) {
+    public static float takeRadioData(int dossier_matricule) {
+        float finalPrice = 0;
         try {
             Radio radio;
             RadioImp radioImp = new RadioImp();
@@ -161,19 +188,23 @@ public class DossierServices {
 
                 description = PmScanner.takeStringInputValue("Enter the description: ");
                 prix = PmScanner.takeIntInputValue("Enter the price: ");
+                finalPrice += (prix * taux) / 100;
 
                 DossierImp dossierImp = new DossierImp();
                 Dossier dossier = dossierImp.getDossier(dossier_matricule);
 
                 radio = new Radio(radiologie, prix, taux, description, type, dossier);
                 radioImp.add(radio);
+
             }
 
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
+        return finalPrice;
     }
-    public static void takeAnalyseData(int dossier_matricule) {
+    public static float takeAnalyseData(int dossier_matricule) {
+        float finalPrice = 0;
         try {
             Analyse analyse;
             AnalyseImp analyseImp = new AnalyseImp();
@@ -207,6 +238,8 @@ public class DossierServices {
                 description = PmScanner.takeStringInputValue("Enter the description: ");
                 prix = PmScanner.takeIntInputValue("Enter the price: ");
 
+                finalPrice += (prix * taux) / 100;
+
                 DossierImp dossierImp = new DossierImp();
                 Dossier dossier = dossierImp.getDossier(dossier_matricule);
 
@@ -217,9 +250,11 @@ public class DossierServices {
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
+        return finalPrice;
     }
 
-    public static void takeOrdonnanceData(int dossier_matricule) {
+    public static float takeOrdonnanceData(int dossier_matricule) {
+        float finalPrice = 0;
         try {
             Ordonnance ordonnance;
             OrdonnanceImp ordonnanceImp = new OrdonnanceImp();
@@ -230,7 +265,7 @@ public class DossierServices {
 
             int ordonnanceCount = PmScanner.takeIntInputValue("Enter Ordonnance count: ");
             for (int i = 0; i < ordonnanceCount; i++) {
-                System.out.println("Enter Analyse " + Integer.toString(i + 1) + " infos:");
+                System.out.println("Enter Ordonnance " + Integer.toString(i + 1) + " infos:");
 
                 Medcine medcine;
                 do {
@@ -253,19 +288,59 @@ public class DossierServices {
                 description = PmScanner.takeStringInputValue("Enter the description: ");
                 prix = PmScanner.takeIntInputValue("Enter the price: ");
 
+                finalPrice += (prix * taux) / 100;
+
                 DossierImp dossierImp = new DossierImp();
                 Dossier dossier = dossierImp.getDossier(dossier_matricule);
 
                 ordonnance = new Ordonnance(prix, taux, description, medcine, dossier);
-                System.out.println(TextColor.greenText(
-                        medcine.getINPE()
-                ));
                 ordonnanceImp.add(ordonnance);
             }
 
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
+        return finalPrice;
+    }
+    public static float takeMedicamentData(int dossier_matricule) {
+        float finalPrice = 0;
+        try {
+            Medicament medicament;
+            MedicamentImp medicamentImp = new MedicamentImp();
+
+            DossierMedicament dossierMedicament;
+            DossierMedicamentImp dossierMedicamentImp = new DossierMedicamentImp();
+
+            String medicament_code_bar, description, type;
+            float prix, taux;
+
+            int medicamentCount = PmScanner.takeIntInputValue("Enter medicament count: ");
+            for (int i = 0; i < medicamentCount; i++) {
+                System.out.println("Enter Medicament " + Integer.toString(i + 1) + " infos:");
+
+                do {
+                    medicament_code_bar = PmScanner.takeStringInputValue("Enter the medicament code bare: ");
+                    medicament = medicamentImp.getMedicament(medicament_code_bar);
+                    if (medicament == null) {
+                        System.out.println("There is no medicament with this code bare, Try another one");
+                    }
+                } while (medicament == null);
+
+                prix = medicament.getPrix();
+                taux = medicament.getCategorie().getTaux();
+
+                finalPrice += (prix * taux) / 100;
+
+                DossierImp dossierImp = new DossierImp();
+                Dossier dossier = dossierImp.getDossier(dossier_matricule);
+
+                dossierMedicament = new DossierMedicament(dossier, medicament);
+                dossierMedicamentImp.add(dossierMedicament);
+            }
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
+        return finalPrice;
     }
 
 

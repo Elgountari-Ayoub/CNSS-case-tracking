@@ -3,42 +3,36 @@ package ma.MaCNSS.Entities.Medicament;
 import ma.MaCNSS.Entities.Dossier;
 
 public class Medicament {
-    private int code_barre ;
+    private String code_barre ;
     private float prix ;
     private String label ;
     private Categorie categorie;
 
-    private Dossier dossier;
 
-    public Medicament(int code_barre, float prix, String label, Dossier dossier, Categorie categorie) {
+/*
+* Delete the dossier from the Medicament class imp
+* */
+    public Medicament(String code_barre, float prix, String label, Categorie categorie) {
         this.code_barre = code_barre;
         this.prix = prix;
         this.label = label;
-        this.dossier = dossier;
         this.categorie = categorie;
     }
 
-    public Medicament(float prix, String label, Dossier dossier, Categorie categorie) {
-        this.code_barre = code_barre;
-        this.prix = prix;
-        this.label = label;
-        this.dossier = dossier;
-        this.categorie = categorie;
-    }
 
     public Medicament() {
     }
 
-    public int getCode_barre() {
+    public String getCode_barre() {
         return code_barre;
     }
 
-    public void setCode_barre(int code_barre) {
+    public void setCode_barre(String code_barre) {
         this.code_barre = code_barre;
     }
 
     public float getPrix() {
-        return prix;
+        return this.prix;
     }
 
     public void setPrix(float prix) {
@@ -46,7 +40,7 @@ public class Medicament {
     }
 
     public String getLabel() {
-        return label;
+        return this.label;
     }
 
     public void setLabel(String label) {
@@ -54,18 +48,10 @@ public class Medicament {
     }
 
     public Categorie getCategorie() {
-        return categorie;
+        return this.categorie;
     }
 
     public void setCategorie(Categorie categorie) {
         this.categorie = categorie;
-    }
-
-    public Dossier getDossier() {
-        return dossier;
-    }
-
-    public void setDossier(Dossier dossier) {
-        this.dossier = dossier;
     }
 }

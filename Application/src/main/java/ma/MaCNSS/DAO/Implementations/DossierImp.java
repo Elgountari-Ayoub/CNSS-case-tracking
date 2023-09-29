@@ -89,5 +89,23 @@ public class DossierImp implements DossierInterface {
         return null;
     }
 
+    @Override
+    public boolean setRemboursement(Dossier dossier) {
+        String sql = "Update dossier set remboursement = ? WHERE matricule = ?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setFloat(1, dossier.getRemboursement());
+            ps.setInt(2, dossier.getMatricule());
+
+            return ps.executeUpdate() > 0;
+
+        }catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        return false;
+    }
+
 
 }

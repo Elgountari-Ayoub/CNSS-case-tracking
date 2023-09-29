@@ -14,6 +14,7 @@ import java.util.List;
 public class Dossier {
     private int matricule;
     private Etat etat = Etat.ACCEPTED;
+    private float remboursement;
     private List<Medicament> medicamentList;
 
     private List<Analyse> analyseList;
@@ -111,5 +112,13 @@ public class Dossier {
 
     public void setPatient(Patient patient) {
         this.patient = patient;
+    }
+
+    public float getRemboursement() {
+        return this.remboursement;
+    }
+
+    public void setRemboursement(float remboursement) {
+        this.remboursement = remboursement;
     }
 }
