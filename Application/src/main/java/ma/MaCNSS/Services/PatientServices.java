@@ -1,6 +1,7 @@
 package ma.MaCNSS.Services;
 
 
+import ma.MaCNSS.Connection.DBConnection;
 import ma.MaCNSS.DAO.Implementations.AdminImp;
 import ma.MaCNSS.DAO.Implementations.Person.AgentCNSSImp;
 import ma.MaCNSS.DAO.Implementations.Person.PatientImp;
@@ -12,11 +13,16 @@ import ma.MaCNSS.Helpers.GMailer;
 import ma.MaCNSS.Helpers.PmScanner;
 import ma.MaCNSS.Helpers.TextColor;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class PatientServices {
+    static Connection con = DBConnection.getConnection();
+
     static Scanner scanner = new Scanner(System.in);
     static PatientImp patientImp = new PatientImp();
     static Patient patient = new Patient();
@@ -76,6 +82,49 @@ public class PatientServices {
         }
         System.out.println("You Passed 3 times, Try later!");
         return null;
+    }
+
+    public static void getDossiers(Patient patient) {
+        String sql = "SELECT\n" +
+                "    d.matricule AS dossier_number,\n" +
+                "\td.remboursement As dossier_remboursement,\n" +
+                "\t(SELECT COUNT(*) FROM analysee a WHERE a.dossier_matricule = d.matricule) AS analysee_count,\n" +
+                "    (SELECT COUNT(*) FROM scanner s WHERE s.dossier_matricule = d.matricule) AS scanner_count,\n" +
+                "    (SELECT COUNT(*) FROM radio r WHERE r.dossier_matricule = d.matricule) AS radio_count,\n" +
+                "    (SELECT COUNT(*) FROM ordonnance o WHERE o.dossier_matricule = d.matricule) AS ordonnance_count,\n" +
+                "    (SELECT COUNT(*) FROM dossierMedicament dm WHERE dm.dossier_matricule = d.matricule) AS dossiermedicament_count\n" +
+                "FROM dossier d\n" +
+                "WHERE d.patient_immatricule = ?;";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            System.out.println(TextColor.greenText(patient.getImmatricule()));
+            ps.setString(1, patient.getImmatricule());
+            ResultSet resultSet =  ps.executeQuery();
+            if (resultSet.next()){
+                int matricule = resultSet.getInt("dossier_number");
+                float remboursement = resultSet.getFloat("dossier_remboursement");
+                int analyseCount = resultSet.getInt("analysee_count");
+                int scannerCount = resultSet.getInt("scanner_count");
+                int radioCount = resultSet.getInt("radio_count");
+                int ordonnanceCount = resultSet.getInt("ordonnance_count");
+                int dossierMedicamentCount = resultSet.getInt("dossiermedicament_count");
+
+                System.out.println(TextColor.greenText(
+                        "\tdossier_number: " + matricule+ "\n" +
+                                "\tdossier_remboursement: " +remboursement+ "\n" +
+                                "\tanalysee_count: " +analyseCount+ "\n" +
+                                "\tscanner_count: " + scannerCount+"\n" +
+                                "\tradio_count: " + radioCount + "\n" +
+                                "\tordonnance_count: " + ordonnanceCount + "\n" +
+                                "\tdossiermedicament_count: "+ dossierMedicamentCount+ "\n\n"
+                ));
+            }
+            else {
+                System.out.println(TextColor.yellowText("Empty ..!"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(TextColor.yellowText(ex.getMessage()));
+        }
     }
 
 }

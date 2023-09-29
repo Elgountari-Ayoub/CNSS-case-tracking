@@ -34,6 +34,7 @@ import ma.MaCNSS.Helpers.UI;
 import ma.MaCNSS.Services.AdminServices;
 import ma.MaCNSS.Services.AgentServices;
 import ma.MaCNSS.Services.DossierServices;
+import ma.MaCNSS.Services.PatientServices;
 import ma.MaCNSS.enums.Etat;
 import ma.MaCNSS.enums.Genre;
 
@@ -106,6 +107,30 @@ public class Main {
                                 } else {
                                     System.err.println("Le dossier pas ajoute");
                                 }
+                                break;
+                        }
+                    } while (choice != 0);
+
+                    choice = -1;
+                    break;
+                //Patient
+                case 3:
+                    // => LOGIN
+                    Patient patient = new Patient();
+//                    patient = PatientServices.login();
+//                    if (patient == null) {
+//                        break;
+//                    }
+                    System.out.println("Welcom Patien Agent 💪🏼");
+
+                    do {
+                        UI.PATIENT_MENU();
+                        choice = PmScanner.takeUserChoice(0, 1);
+                        Dossier dossier = new Dossier();
+                        switch (choice) {
+                            case 1:
+                                patient.setImmatricule("imat2222");
+                                PatientServices.getDossiers(patient);
                                 break;
                         }
                     } while (choice != 0);

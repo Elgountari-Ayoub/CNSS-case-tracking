@@ -25,4 +25,5 @@ public interface AnalyseInterface {
     public List<Analyse> getAnalyses()
             throws SQLException;
 
+    Analyse getAnalyseByDossier(Dossier dossier);
 }

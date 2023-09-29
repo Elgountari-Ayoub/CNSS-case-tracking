@@ -1,7 +1,10 @@
 package ma.MaCNSS.DAO.Implementations.Person;
 
 import ma.MaCNSS.Connection.DBConnection;
+import ma.MaCNSS.DAO.Implementations.Documents.AnalyseImp;
 import ma.MaCNSS.DAO.Interfaces.Person.PatientInterface;
+import ma.MaCNSS.Entities.Documents.Analyse;
+import ma.MaCNSS.Entities.Dossier;
 import ma.MaCNSS.Entities.Personnes.AgentCNSS;
 import ma.MaCNSS.Entities.Personnes.Patient;
 import ma.MaCNSS.enums.Genre;
@@ -118,7 +121,9 @@ public class PatientImp implements PatientInterface {
 
 
     @Override
-    public Patient getPtientDossiers(String immatricule) throws SQLException {
+    public Patient getPtientDossiers(Dossier dossier) throws SQLException {
+        AnalyseImp analyseImp = new AnalyseImp();
+        Analyse analyse = analyseImp.getAnalyseByDossier(dossier);
         return null;
     }
 

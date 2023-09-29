@@ -1,5 +1,6 @@
 package ma.MaCNSS.DAO.Interfaces.Person;
 
+import ma.MaCNSS.Entities.Dossier;
 import ma.MaCNSS.Entities.Personnes.AgentCNSS;
 import ma.MaCNSS.Entities.Personnes.Patient;
 
@@ -22,7 +23,7 @@ public interface PatientInterface {
     public Patient findByEmail (String  email)
             throws SQLException;
 
-    public Patient getPtientDossiers(String immatricule)
+    public Patient getPtientDossiers(Dossier dossier)
             throws SQLException;
 
     public List<Patient> getPatient()

@@ -3,6 +3,7 @@ package ma.MaCNSS.DAO.Implementations.Documents;
 import ma.MaCNSS.Connection.DBConnection;
 import ma.MaCNSS.DAO.Interfaces.Documents.AnalyseInterface;
 import ma.MaCNSS.Entities.Documents.Analyse;
+import ma.MaCNSS.Entities.Dossier;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -75,6 +76,11 @@ public class AnalyseImp implements AnalyseInterface {
 
     @Override
     public List<Analyse> getAnalyses() throws SQLException {
+        return null;
+    }
+
+    @Override
+    public Analyse getAnalyseByDossier(Dossier dossier) {
         return null;
     }
 
