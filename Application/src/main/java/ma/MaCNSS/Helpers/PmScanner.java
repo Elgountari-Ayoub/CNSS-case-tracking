@@ -88,7 +88,7 @@ public class PmScanner {
     public static Etat takeFolderStatus() {
         String response;
         do {
-            response = takeStringInputValue("Enter the Folder status: ");
+            response = takeStringInputValue("Enter the Folder status(ACCEPTED/PENDING/REFUSED): ");
         } while (!response.equalsIgnoreCase("ACCEPTED") && !response.equalsIgnoreCase("PENDING") && !response.equalsIgnoreCase("REFUSED"));
         return Etat.valueOf(response.toUpperCase());
     }

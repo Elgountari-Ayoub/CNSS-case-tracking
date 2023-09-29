@@ -14,7 +14,7 @@ import java.util.List;
 public class RadioImp implements RadioInterface {
     static Connection con = DBConnection.getConnection();
     @Override
-    public boolean add(Radio radio) {
+public boolean add(Radio radio) {
         String sql = "INSERT INTO radio" +
                 " (radiologie_inpe, prix, description, dossier_matricule, type) VALUES" +
                 " (?, ?, ?, ?, ?) ";

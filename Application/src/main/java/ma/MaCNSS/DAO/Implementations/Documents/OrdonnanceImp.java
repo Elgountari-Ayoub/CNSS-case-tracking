@@ -17,16 +17,15 @@ public class OrdonnanceImp implements OrdonnanceInterface {
     @Override
     public boolean add(Ordonnance ordonnance) {
         String sql = "INSERT INTO ordonnance" +
-                " (prix, taux, description, dossier_matricule, medcine_inpe) VALUES" +
-                " (?, ?, ?, ?, ?) ";
+                " (prix, description, dossier_matricule, medcine_inpe) VALUES" +
+                " (?, ?, ?, ?) ";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
 
             ps.setFloat(1, ordonnance.getPrix());
-            ps.setFloat(2, ordonnance.getTaux());
-            ps.setString(3, ordonnance.getDescription());
-            ps.setInt(4, ordonnance.getDossier().getMatricule());
-            ps.setString(5, ordonnance.getMedcine().getINPE());
+            ps.setString(2, ordonnance.getDescription());
+            ps.setInt(3, ordonnance.getDossier().getMatricule());
+            ps.setString(4, ordonnance.getMedcine().getINPE());
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {

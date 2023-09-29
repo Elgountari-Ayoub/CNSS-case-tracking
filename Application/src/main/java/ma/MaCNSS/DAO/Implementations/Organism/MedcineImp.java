@@ -64,7 +64,7 @@ public class MedcineImp implements MedcineInterface {
                 prenom = resultSet.getString("prenom");
                 type = resultSet.getString("type");
 
-                TypeMedcine typeMedcine = TypeMedcine.GENERALSITE;
+                TypeMedcine typeMedcine = TypeMedcine.GENERALISTE;
                 if (type.equalsIgnoreCase(TypeMedcine.SPECIALISTE.toString())){
                     typeMedcine = TypeMedcine.SPECIALISTE;
                 };
@@ -80,6 +80,27 @@ public class MedcineImp implements MedcineInterface {
         return null;
     }
 
+    public float getMedcinTauxByType(String type){
+        String sql = "Select taux from medcineType where type = ?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, type);
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+                float taux = resultSet.getFloat("taux");
+                return taux;
+            } else {
+                return -1;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getting the medcine taux: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+        return -1;
+    }
     @Override
     public List<Medcine> getMedcines() throws SQLException {
         return null;

@@ -1,16 +1,22 @@
 package ma.MaCNSS.Services;
 
 
+import ma.MaCNSS.DAO.Implementations.Documents.AnalyseImp;
+import ma.MaCNSS.DAO.Implementations.Documents.OrdonnanceImp;
 import ma.MaCNSS.DAO.Implementations.Documents.RadioImp;
 import ma.MaCNSS.DAO.Implementations.Documents.ScannerImp;
 import ma.MaCNSS.DAO.Implementations.DossierImp;
+import ma.MaCNSS.DAO.Implementations.Organism.LaboratoireImp;
+import ma.MaCNSS.DAO.Implementations.Organism.MedcineImp;
 import ma.MaCNSS.DAO.Implementations.Organism.RadiologieImp;
 import ma.MaCNSS.DAO.Implementations.Person.AgentCNSSImp;
 import ma.MaCNSS.DAO.Implementations.Person.PatientImp;
-import ma.MaCNSS.DAO.Interfaces.DossierInterface;
-import ma.MaCNSS.DAO.Interfaces.Person.AgentCNSSInterface;
+import ma.MaCNSS.Entities.Documents.Analyse;
+import ma.MaCNSS.Entities.Documents.Ordonnance;
 import ma.MaCNSS.Entities.Documents.Radio;
 import ma.MaCNSS.Entities.Dossier;
+import ma.MaCNSS.Entities.Organisme.Laboratoire;
+import ma.MaCNSS.Entities.Organisme.Medcine;
 import ma.MaCNSS.Entities.Organisme.Radiologie;
 import ma.MaCNSS.Entities.Documents.Scanner;
 import ma.MaCNSS.Entities.Personnes.AgentCNSS;
@@ -18,8 +24,6 @@ import ma.MaCNSS.Entities.Personnes.Patient;
 import ma.MaCNSS.Helpers.PmScanner;
 import ma.MaCNSS.Helpers.TextColor;
 import ma.MaCNSS.enums.Etat;
-
-import java.awt.image.RasterOp;
 
 
 public class DossierServices {
@@ -62,6 +66,11 @@ public class DossierServices {
             takeScannerData(dossier.getMatricule());
             //RADIO
             takeRadioData(dossier.getMatricule());
+            //ANALYSE
+            takeAnalyseData(dossier.getMatricule());
+            //ORDONNANCE
+            takeOrdonnanceData(dossier.getMatricule());
+
             System.out.println(TextColor.greenText("Keep going bro"));
 
             return dossier;
@@ -98,8 +107,8 @@ public class DossierServices {
                 }while(radiologie == null);
 
                 do {
-                    type = PmScanner.takeStringInputValue("Enter the type: ");
-                    taux = scannerImp.getScannerTauxByType(type);
+                    type = PmScanner.takeStringInputValue("Enter the scanner type: ");
+                    taux = scannerImp.getScannerTauxByType(type.toUpperCase());
                     if (taux == -1) {
                         System.out.println("There is no scanner with this type, Try another one");
                     }
@@ -110,9 +119,6 @@ public class DossierServices {
 
                 DossierImp dossierImp = new DossierImp();
                 Dossier dossier = dossierImp.getDossier(dossier_matricule);
-
-                System.out.println(radiologie.getINPE());
-                System.out.println(type);
                 scanner = new Scanner(radiologie, prix, taux, description, type, dossier);
                 scannerImp.add(scanner);
             }
@@ -146,7 +152,7 @@ public class DossierServices {
                 }while(radiologie == null);
 
                 do {
-                    type = PmScanner.takeStringInputValue("Enter the type: ");
+                    type = PmScanner.takeStringInputValue("Enter the radio type: ");
                     taux = radioImp.getRadioTauxByType(type);
                     if (taux == -1) {
                         System.out.println("There is no radio with this type, Try another one");
@@ -159,10 +165,102 @@ public class DossierServices {
                 DossierImp dossierImp = new DossierImp();
                 Dossier dossier = dossierImp.getDossier(dossier_matricule);
 
-                System.out.println(radiologie.getINPE());
-                System.out.println(type);
                 radio = new Radio(radiologie, prix, taux, description, type, dossier);
                 radioImp.add(radio);
+            }
+
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
+    }
+    public static void takeAnalyseData(int dossier_matricule) {
+        try {
+            Analyse analyse;
+            AnalyseImp analyseImp = new AnalyseImp();
+
+            String laboratoire_inpe, description, type;
+            float prix, taux;
+
+            int radioCount = PmScanner.takeIntInputValue("Enter Analyses count: ");
+            for (int i = 0; i < radioCount; i++) {
+                System.out.println("Enter Analyse " + Integer.toString(i+1) + " infos:");
+
+
+                Laboratoire laboratoire;
+                do {
+                    laboratoire_inpe = PmScanner.takeStringInputValue("Enter the laboratoire INPE: ");
+                    LaboratoireImp laboratoireImp = new LaboratoireImp();
+                    laboratoire = laboratoireImp.getLaboratoire(laboratoire_inpe);
+                    if (laboratoire == null) {
+                        System.out.println("There is no laboratoire with this INPE, Try another one");
+                    }
+                }while(laboratoire == null);
+
+                do {
+                    type = PmScanner.takeStringInputValue("Enter the type: ");
+                    taux = analyseImp.getAnalyseTauxByType(type);
+                    if (taux == -1) {
+                        System.out.println("There is no analyse with this type, Try another one");
+                    }
+                }while(taux == -1);
+
+                description = PmScanner.takeStringInputValue("Enter the description: ");
+                prix = PmScanner.takeIntInputValue("Enter the price: ");
+
+                DossierImp dossierImp = new DossierImp();
+                Dossier dossier = dossierImp.getDossier(dossier_matricule);
+
+                analyse = new Analyse(laboratoire, prix, taux, description, type, dossier);
+                analyseImp.add(analyse);
+            }
+
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
+    }
+
+    public static void takeOrdonnanceData(int dossier_matricule) {
+        try {
+            Ordonnance ordonnance;
+            OrdonnanceImp ordonnanceImp = new OrdonnanceImp();
+            MedcineImp medcineImp;
+
+            String medcine_inpe, description, type;
+            float prix, taux;
+
+            int ordonnanceCount = PmScanner.takeIntInputValue("Enter Ordonnance count: ");
+            for (int i = 0; i < ordonnanceCount; i++) {
+                System.out.println("Enter Analyse " + Integer.toString(i + 1) + " infos:");
+
+                Medcine medcine;
+                do {
+                    medcine_inpe = PmScanner.takeStringInputValue("Enter the medcin INPE: ");
+                    medcineImp = new MedcineImp();
+                    medcine = medcineImp.getMedcine(medcine_inpe);
+                    if (medcine == null) {
+                        System.out.println("There is no medcine with this INPE, Try another one");
+                    }
+                } while (medcine == null);
+
+                do {
+                    type = PmScanner.takeStringInputValue("Enter the Medcin type(GENERALISTE/SPECIALISTE)?: ");
+                    taux = medcineImp.getMedcinTauxByType(type);
+                    if (taux == -1) {
+                        System.out.println("There is no medcine with this type, Try another one");
+                    }
+                } while (taux == -1);
+
+                description = PmScanner.takeStringInputValue("Enter the description: ");
+                prix = PmScanner.takeIntInputValue("Enter the price: ");
+
+                DossierImp dossierImp = new DossierImp();
+                Dossier dossier = dossierImp.getDossier(dossier_matricule);
+
+                ordonnance = new Ordonnance(prix, taux, description, medcine, dossier);
+                System.out.println(TextColor.greenText(
+                        medcine.getINPE()
+                ));
+                ordonnanceImp.add(ordonnance);
             }
 
         } catch (Exception ex) {

@@ -62,7 +62,6 @@ public class Main {
                     if (admin == null) {
                         break;
                     }
-
                     System.out.println("Welcom Admin 💪🏼");
 
                     // SUBMENU => ADD AN AGENT
@@ -92,7 +91,6 @@ public class Main {
 //                    if (agentCNSS == null) {
 //                        break;
 //                    }
-
                     System.out.println("Welcom CNSS Agent 💪🏼");
 
                     // SUBMENU => ADD AN AGENT
@@ -239,7 +237,7 @@ public class Main {
             Dossier dossier = dossierImp.getDossier(dossier_matricule);
 
 
-            return new Analyse(prix, taux, description, type, laboratoire, dossier);
+            return new Analyse(laboratoire, prix, taux, description, type, dossier);
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }

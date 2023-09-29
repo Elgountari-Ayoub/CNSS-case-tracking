@@ -14,7 +14,7 @@ public class Analyse extends Document {
         this.type = type;
     }
 
-    public Analyse(float prix, float taux, String description, String type, Laboratoire laboratoire, Dossier dossier) {
+    public Analyse(Laboratoire laboratoire, float prix, float taux, String description, String type, Dossier dossier) {
         super(prix, taux, description, dossier);
         this.laboratoire = laboratoire;
         this.type = type;

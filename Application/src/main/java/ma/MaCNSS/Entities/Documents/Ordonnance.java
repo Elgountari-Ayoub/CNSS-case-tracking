@@ -22,7 +22,7 @@ public class Ordonnance extends Document {
     }
 
     public Medcine getMedcine() {
-        return medcine;
+        return this.medcine;
     }
 
     public void setMedcine(Medcine medcine) {
