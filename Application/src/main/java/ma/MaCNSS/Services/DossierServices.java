@@ -25,6 +25,7 @@ import ma.MaCNSS.Entities.Organisme.Radiologie;
 import ma.MaCNSS.Entities.Documents.Scanner;
 import ma.MaCNSS.Entities.Personnes.AgentCNSS;
 import ma.MaCNSS.Entities.Personnes.Patient;
+import ma.MaCNSS.Helpers.GMailer;
 import ma.MaCNSS.Helpers.PmScanner;
 import ma.MaCNSS.Helpers.TextColor;
 import ma.MaCNSS.enums.Etat;
@@ -95,6 +96,10 @@ public class DossierServices {
 
             if (dossierImp.setRemboursement(dossier)){
                 System.out.println("remboursement saved successfully");
+
+                //Send email to the patient
+                boolean emailSent = new GMailer().sendEmail(String.valueOf(dossierRemb), "Remboursement", patient.getEmail());
+                if (emailSent) {}
             }
             else {
                 System.out.println(TextColor.yellowText("error occured while trying to save the remboursement!"));

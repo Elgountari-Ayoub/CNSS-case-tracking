@@ -117,19 +117,17 @@ public class Main {
                 case 3:
                     // => LOGIN
                     Patient patient = new Patient();
-//                    patient = PatientServices.login();
-//                    if (patient == null) {
-//                        break;
-//                    }
+                    patient = PatientServices.login();
+                    if (patient == null) {
+                        break;
+                    }
                     System.out.println("Welcom Patien Agent 💪🏼");
 
                     do {
                         UI.PATIENT_MENU();
                         choice = PmScanner.takeUserChoice(0, 1);
-                        Dossier dossier = new Dossier();
                         switch (choice) {
                             case 1:
-                                patient.setImmatricule("imat2222");
                                 PatientServices.getDossiers(patient);
                                 break;
                         }
