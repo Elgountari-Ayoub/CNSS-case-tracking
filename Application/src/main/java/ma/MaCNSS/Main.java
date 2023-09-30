@@ -88,13 +88,13 @@ public class Main {
                 case 2:
                     // => LOGIN
                     AgentCNSS agentCNSS = new AgentCNSS();
-//                    agentCNSS = AgentServices.login();
-//                    if (agentCNSS == null) {
-//                        break;
-//                    }
+                    agentCNSS = AgentServices.login();
+                    if (agentCNSS == null) {
+                        break;
+                    }
                     System.out.println("Welcom CNSS Agent 💪🏼");
 
-                    // SUBMENU => ADD AN AGENT
+                    // SUBMENU => SUBMIT A FILE
                     do {
                         UI.AGENT_MENU();
                         choice = PmScanner.takeUserChoice(0, 1);

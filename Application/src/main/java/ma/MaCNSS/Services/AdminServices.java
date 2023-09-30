@@ -21,13 +21,12 @@ public class AdminServices {
     static Admin admin = new Admin();
 
     public static Admin login() {
-        String email, pass;
         boolean quite = false;
         int loginCount = 0;
         do {
             System.out.println(TextColor.yellowText("\t\tADMIN LOGIN"));
 
-            System.out.print("Enter yout email: ");
+            System.out.print("Enter your email: ");
             admin.setEmail(scanner.next());
 
             try {
@@ -36,21 +35,42 @@ public class AdminServices {
                     System.out.print("Enter your password: ");
                     admin.setPass(scanner.next());
 
-                    //if (BCrypt.checkpw(agentCNSS.getPassword(), loggedInAgent.getPassword())) {
                     if (admin.getPass().equals(loggedAdmin.getPass())) {
-                        //GMailer.send();
                         int randomNumber = ThreadLocalRandom.current().nextInt(10000, 99999 + 1);
                         try {
+                            long emailSentTime = System.currentTimeMillis(); // Record the time when the email is sent
                             boolean emailSent = new GMailer().sendEmail(String.valueOf(randomNumber), "email confirmation", admin.getEmail());
                             if (emailSent) {
-                                int userInput = PmScanner.takeIntInputValue("Enter verification code: ");
+                                System.out.println("Verification code sent successfully. You have 5 minutes to enter it.");
 
-                                if (userInput == randomNumber) {
-                                    System.out.println("Connected successfully");
-                                    return admin;
-                                } else {
-                                    System.out.println(TextColor.yellowText("Wrong verification code?!"));
+                                // Calculate the end time of the 5-minute window
+                                long endTime = emailSentTime + (5 * 60 * 1000);
+
+                                // Enter a loop to wait for user input
+                                while (System.currentTimeMillis() < endTime) {
+                                    // Calculate remaining time in mm:ss format
+                                    long remainingTimeSeconds = (endTime - System.currentTimeMillis()) / 1000;
+                                    long minutes = remainingTimeSeconds / 60;
+                                    long seconds = remainingTimeSeconds % 60;
+                                    String remainingTimeFormatted = String.format("%02d:%02d", minutes, seconds);
+
+                                    // Display the remaining time to the user
+                                    System.out.println("Time remaining: " + remainingTimeFormatted);
+
+                                    // Check if the user entered the correct code
+                                    int userInput = PmScanner.takeIntInputValue("Enter verification code: ");
+                                    if (userInput == randomNumber) {
+                                        System.out.println("Connected successfully");
+                                        return admin;
+                                    } else {
+                                        System.out.println(TextColor.yellowText("Wrong verification code!"));
+                                    }
+
+                                    // Introduce a delay to refresh the display every second
+                                    Thread.sleep(1000);
                                 }
+                                // Time's up
+                                System.out.println("Time's up! Please try again.");
                             } else {
                                 System.out.println(TextColor.yellowText("Error sending the email, check your network!"));
                             }
@@ -61,19 +81,21 @@ public class AdminServices {
                         System.err.println("Password is incorrect");
                     }
                 } else {
-                    System.out.println("email not correct");
+                    System.out.println("Email not correct");
                 }
             } catch (SQLException ex) {
-                System.err.println("message : " + ex.getMessage());
+                System.err.println("message: " + ex.getMessage());
             }
             loginCount++;
-            quite = !PmScanner.confirmation(TextColor.yellowText("trye again(Y/N)? "));
-        } while (loginCount < 2 && quite == false);
+            quite = !PmScanner.confirmation(TextColor.yellowText("try again (Y/N)? "));
+        } while (loginCount < 2 && !quite);
 
-        if (quite == true) {
+        if (quite) {
             return null;
         }
-        System.out.println("You Passed 3 times, Try later!");
+        System.out.println("You have exceeded 3 login attempts. Try later!");
         return null;
     }
+
+
 }
