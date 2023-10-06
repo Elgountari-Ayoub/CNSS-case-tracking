@@ -150,11 +150,14 @@ public class Main {
 
                         do {
                             UI.PATIENT_MENU();
-                            choice = PmScanner.takeUserChoice(0, 1);
+                            choice = PmScanner.takeUserChoice(0, 2);
                             switch (choice) {
                                 case 1:
                                     patient.setImmatricule("imat1111");
                                     PatientServices.getDossiers(patient);
+                                    break;
+                                case 2:
+                                    EmployeeServices.hasRetrainment(patient.getImmatricule());
                                     break;
                             }
                         } while (choice != 0);
@@ -164,31 +167,40 @@ public class Main {
                     } catch (Exception ex) {
                         System.out.println(ex.getMessage());
                     }
+                    // Company
                 case 4:
                     try {
                         // => LOGIN
-                        Company company;
-                        company = CompanyServices.login();
-                        if (company == null) {
-                            break;
-                        }
+                        Company company = new Company();
+//                        company = CompanyServices.login();
+//                        if (company == null) {
+//                            break;
+//                        }
                         System.out.println("Welcome " + company.getName() + " 💪🏼");
 
-                        // SUBMENU => Add an employee
+                        // SUBMENU => Manage employees
                         do {
                             UI.COMPANY_MENU();
-                            choice = PmScanner.takeUserChoice(0, 1);
+                            choice = PmScanner.takeUserChoice(0, 2);
                             switch (choice) {
                                 case 1:
                                     try {
-                                        company = CompanyServices.add();
-                                        if (company != null) {
-                                            System.out.println(TextColor.greenText("Company added successfully"));
+                                        Employee employee;
+                                        employee = EmployeeServices.add(company);
+                                        if (employee != null) {
+                                            System.out.println(TextColor.greenText("Employee added successfully"));
                                         } else {
-                                            System.err.println("The company not added!, check the administration");
+                                            System.err.println("The Employee not added!, check the administration");
                                         }
                                     } catch (Exception ex) {
                                         System.out.println(TextColor.yellowText(ex.getMessage()));
+                                    }
+                                    break;
+                                case 2:
+                                    try {
+                                        EmployeeServices.updatePresenceStatus();
+                                    }catch (Exception ex){
+                                        System.out.println(ex.getMessage());
                                     }
                             }
                         } while (choice != 0);

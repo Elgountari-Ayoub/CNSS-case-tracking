@@ -157,10 +157,13 @@ public class EmployeeCareerImp  {
             ps.setString(1, immatricule);
             ResultSet resultSet = ps.executeQuery();
 
+            int rowCount = 0;
+
             while (resultSet.next()){
                 salary += resultSet.getFloat("salary");
+                rowCount++;
             }
-            salaryAvg = salary / 96;
+            salaryAvg = salary / rowCount;
 
         }catch (SQLException ex){
             System.out.println(TextColor.yellowText(ex.getMessage()));

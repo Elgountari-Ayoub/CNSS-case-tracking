@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Employee extends Patient {
     private Date birthdayDate;
-    private Boolean isPresent ;
+    private Boolean isPresent = true ;
 
 
     public Employee (String immatricule, String CIN, String nom, String prenom, String ville, String telephone, String email, String password, Genre genre, Date birthdayDate, Boolean isPresent) {

@@ -24,8 +24,8 @@ public class EmployeeImp implements EmployeeInterface {
     public boolean add(Employee employee) {
 
         String sql = "INSERT INTO Employee" +
-                " (immatricule, cin, nom, prenom, ville, telephone, email, password, genre, birthday, isPresent) VALUES" +
-                " (?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+                " (immatricule, cin, nom, prenom, ville, telephone, email, password, genre, birthday) VALUES" +
+                " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
 
@@ -38,8 +38,8 @@ public class EmployeeImp implements EmployeeInterface {
             ps.setString(7, employee.getEmail());
             ps.setString(8, employee.getPassword());
             ps.setString(9, employee.getGenre().toString());
-            ps.setString(10, employee.getImmatricule());
-            ps.setBoolean(11, employee.getPresent());
+            ps.setDate(10, new java.sql.Date(employee.getBirthdayDate().getTime()));
+//            ps.setBoolean(11, employee.getPresent());
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -153,4 +153,19 @@ public class EmployeeImp implements EmployeeInterface {
     }
 
 
+    public int updatePresenceStatus(String immatricule, boolean newStatus) {
+
+        String sql = "updtae employee set isPresent = ? where immatricule = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setBoolean(1, newStatus);
+            ps.setString(2, immatricule);
+
+            return ps.executeUpdate();
+        }catch (SQLException ex){
+            System.out.println(TextColor.yellowText(ex.getMessage()));
+        }
+        return 0;
+    }
 }

@@ -16,6 +16,9 @@ import org.w3c.dom.Text;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
@@ -184,18 +187,45 @@ public class EmployeeServices {
     }
 
     public static boolean canTakeMoney(String immatricule){
-        boolean can = true;
+        boolean can = false;
         try {
             employee = employeeImp.getEmployee(immatricule);
+            // Get the employee's birthday as a java.util.Date
             Date birthday = employee.getBirthdayDate();
-            //calc the age
-            //if age >= 55 ===>  can = true ===> sout("mbrouk l wld lmima, db moumkin t9ross l7it ykhorji l floass HHHHH")
-            //else can = false  ====> sout("You must be 55 or older :)")
-            // RETURN can
+            LocalDate birthdate = birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate currentDate = LocalDate.now();
+            Period age = Period.between(birthdate, currentDate);
+
+            int years = age.getYears();
+            if (years >= 55){
+                System.out.println("mbrouk l wld lmima, db moumkin t9ross l7it ykhorjo l floass HAHAHAHAHA...");
+                can = true;
+            }else{
+                System.out.println("wa sbaaar a m3alem ra yallah 3andek " + years + "3am");
+            }
         }catch (SQLException ex){
             System.out.println(ex.getMessage());
         }
         return can;
+    }
+
+
+    public static int updatePresenceStatus(){
+        String immatricule = PmScanner.takeStringInputValue("Enter Employee imamatricule: ");
+        try {
+            employee = employeeImp.getEmployee(immatricule);
+            System.out.println("0 for absance, 1 for present");
+            int status = PmScanner.takeUserChoice(0,1);
+            if(status == 1){
+            employeeImp.updatePresenceStatus(immatricule, true);
+            }else {
+            employeeImp.updatePresenceStatus(immatricule, false);
+            }
+            System.out.println(TextColor.greenText("Updated successfully :)"));
+        }catch (SQLException ex){
+            System.out.println(TextColor.yellowText(ex.getMessage()));
+        }
+        return 0;
     }
 
 
