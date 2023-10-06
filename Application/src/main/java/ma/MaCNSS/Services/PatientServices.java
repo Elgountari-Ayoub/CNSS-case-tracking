@@ -12,6 +12,7 @@ import ma.MaCNSS.Entities.Personnes.Patient;
 import ma.MaCNSS.Helpers.GMailer;
 import ma.MaCNSS.Helpers.PmScanner;
 import ma.MaCNSS.Helpers.TextColor;
+import ma.MaCNSS.enums.Genre;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -69,7 +70,7 @@ public class PatientServices {
                                     int userInput = PmScanner.takeIntInputValue("Enter verification code: ");
                                     if (userInput == randomNumber) {
                                         System.out.println("Connected successfully");
-                                        return patient;
+                                        return patientImp.findByEmail(patient.getEmail());
                                     } else {
                                         System.out.println(TextColor.yellowText("Wrong verification code!"));
                                     }
@@ -105,7 +106,10 @@ public class PatientServices {
         return null;
     }
 
+    static boolean foundRows = false;
+
     public static void getDossiers(Patient patient) {
+        foundRows = true;
         String sql = "SELECT\n" +
                 "    d.matricule AS dossier_number,\n" +
                 "\td.remboursement As dossier_remboursement,\n" +
@@ -120,8 +124,9 @@ public class PatientServices {
             PreparedStatement ps = con.prepareStatement(sql);
             System.out.println(TextColor.greenText(patient.getImmatricule()));
             ps.setString(1, patient.getImmatricule());
-            ResultSet resultSet =  ps.executeQuery();
-            if (resultSet.next()){
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+
                 int matricule = resultSet.getInt("dossier_number");
                 float remboursement = resultSet.getFloat("dossier_remboursement");
                 int analyseCount = resultSet.getInt("analysee_count");
@@ -131,21 +136,42 @@ public class PatientServices {
                 int dossierMedicamentCount = resultSet.getInt("dossiermedicament_count");
 
                 System.out.println(TextColor.greenText(
-                        "\tdossier_number: " + matricule+ "\n" +
-                                "\tdossier_remboursement: " +remboursement+ "\n" +
-                                "\tanalysee_count: " +analyseCount+ "\n" +
-                                "\tscanner_count: " + scannerCount+"\n" +
+                        "\tdossier_number: " + matricule + "\n" +
+                                "\tdossier_remboursement: " + remboursement + "\n" +
+                                "\tanalysee_count: " + analyseCount + "\n" +
+                                "\tscanner_count: " + scannerCount + "\n" +
                                 "\tradio_count: " + radioCount + "\n" +
                                 "\tordonnance_count: " + ordonnanceCount + "\n" +
-                                "\tdossiermedicament_count: "+ dossierMedicamentCount+ "\n\n"
+                                "\tdossiermedicament_count: " + dossierMedicamentCount + "\n\n" +
+                                "-------------------------------------------------------------\n\n"
                 ));
             }
-            else {
+            if (!foundRows) {
                 System.out.println(TextColor.yellowText("Empty ..!"));
             }
         } catch (SQLException ex) {
             System.out.println(TextColor.yellowText(ex.getMessage()));
         }
+    }
+
+    public static Patient add() {
+        String cin, nom, prenom, ville, telephone, email, genreString, password;
+        String immatricule = PmScanner.takeStringInputValue("Enter immatricule: ");
+        cin = PmScanner.takeStringInputValue("CIN: ");
+        nom = PmScanner.takeStringInputValue("Nom: ");
+        prenom = PmScanner.takeStringInputValue("Prenom: ");
+        ville = PmScanner.takeStringInputValue("Ville: ");
+        telephone = PmScanner.takeStringInputValue("Telephone: ");
+        Genre genre = Genre.valueOf(PmScanner.takeGender("Genre(HOMME/FEMME)? "));
+
+        email = PmScanner.takeStringInputValue("Email: ");
+        password = PmScanner.takeStringInputValue("Mote de pass: ");
+
+        patient =  new Patient(immatricule, cin, nom, prenom, ville, telephone, email, password, genre);
+        if (patientImp.add(patient)){
+            return patient;
+        }
+        return null;
     }
 
 }

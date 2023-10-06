@@ -88,7 +88,7 @@ public class AdminServices {
             }
             loginCount++;
             quite = !PmScanner.confirmation(TextColor.yellowText("try again (Y/N)? "));
-        } while (loginCount < 2 && !quite);
+        } while (loginCount < 3 && !quite);
 
         if (quite) {
             return null;

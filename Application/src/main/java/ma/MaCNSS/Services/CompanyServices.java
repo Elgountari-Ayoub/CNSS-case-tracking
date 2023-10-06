@@ -1,7 +1,9 @@
 package ma.MaCNSS.Services;
 
 
-import ma.MaCNSS.DAO.Implementations.Person.AgentCNSSImp;
+import ma.MaCNSS.DAO.Implementations.AdminImp;
+import ma.MaCNSS.DAO.Implementations.CompanyImp;
+import ma.MaCNSS.Entities.Admin;
 import ma.MaCNSS.Entities.Company;
 import ma.MaCNSS.Entities.Personnes.AgentCNSS;
 import ma.MaCNSS.Helpers.GMailer;
@@ -9,36 +11,36 @@ import ma.MaCNSS.Helpers.PmScanner;
 import ma.MaCNSS.Helpers.TextColor;
 import ma.MaCNSS.enums.Genre;
 
+import javax.swing.*;
 import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class AgentServices  {
+public class CompanyServices {
     static Scanner scanner = new Scanner(System.in);
-    static AgentCNSSImp agentCNSSImp = new AgentCNSSImp();
-    static AgentCNSS agentCNSS = new AgentCNSS();
+    static CompanyImp companyImp = new CompanyImp();
+    static Company company = new Company();
 
-    public static AgentCNSS login() {
-        String email, pass;
-        boolean quite = false;
+    public static Company login() {
+        boolean quite;
         int loginCount = 0;
         do {
-            System.out.println(TextColor.yellowText("\t\tAGENT CNSS LOGIN"));
+            System.out.println(TextColor.yellowText("\t\tCOMPANY LOGIN"));
 
             System.out.print("Enter your email: ");
-            agentCNSS.setEmail(scanner.next());
+            company.setEmail(scanner.next());
 
             try {
-                AgentCNSS loggedAgent = agentCNSSImp.findByEmail(agentCNSS.getEmail());
-                if (loggedAgent != null) {
+                Company loggedCompany = companyImp.findByEmail(company.getEmail());
+                if (loggedCompany != null) {
                     System.out.print("Enter your password: ");
-                    agentCNSS.setPassword(scanner.next());
+                    company.setPassword(scanner.next());
 
-                    if (agentCNSS.getPassword().equals(loggedAgent.getPassword())) {
+                    if (company.getPassword().equals(loggedCompany.getPassword())) {
                         int randomNumber = ThreadLocalRandom.current().nextInt(10000, 99999 + 1);
                         try {
                             long emailSentTime = System.currentTimeMillis(); // Record the time when the email is sent
-                            boolean emailSent = new GMailer().sendEmail(String.valueOf(randomNumber), "email confirmation", agentCNSS.getEmail());
+                            boolean emailSent = new GMailer().sendEmail(String.valueOf(randomNumber), "email confirmation", company.getEmail());
                             if (emailSent) {
                                 System.out.println("Verification code sent successfully. You have 5 minutes to enter it.");
 
@@ -60,7 +62,7 @@ public class AgentServices  {
                                     int userInput = PmScanner.takeIntInputValue("Enter verification code: ");
                                     if (userInput == randomNumber) {
                                         System.out.println("Connected successfully");
-                                        return agentCNSS;
+                                        return company;
                                     } else {
                                         System.out.println(TextColor.yellowText("Wrong verification code!"));
                                     }
@@ -77,7 +79,7 @@ public class AgentServices  {
                             System.out.println("Error sending the email, check your network!");
                         }
                     } else {
-                        System.out.println(TextColor.yellowText("Password is incorrect"));
+                        System.err.println("Password is incorrect");
                     }
                 } else {
                     System.out.println("Email not correct");
@@ -96,29 +98,19 @@ public class AgentServices  {
         return null;
     }
 
-
-    public static AgentCNSS add() {
-        String cin, nom, prenom, ville, telephone, email, genreString, password;
-        cin = PmScanner.takeStringInputValue("CIN: ");
-        nom = PmScanner.takeStringInputValue("Nom: ");
-        prenom = PmScanner.takeStringInputValue("Prenom: ");
-        ville = PmScanner.takeStringInputValue("Ville: ");
-        telephone = PmScanner.takeStringInputValue("Telephone: ");
-        Genre genre = Genre.valueOf(PmScanner.takeGender("Genre(HOMME/FEMME)? "));
-
+    public static Company add() {
+        String matricule, name, email, password;
+        matricule = PmScanner.takeStringInputValue("Matricule: ");
+        name = PmScanner.takeStringInputValue("Name: ");
         email = PmScanner.takeStringInputValue("Email: ");
-        password = PmScanner.takeStringInputValue("Mote de pass: ");
+        password = PmScanner.takeStringInputValue("Password: ");
 
-        agentCNSS =  new AgentCNSS(cin, nom, prenom, ville, telephone, email, password, genre);
-        if (agentCNSSImp.add(agentCNSS)){
-            return agentCNSS;
+        company =  new Company(matricule, name, email, password);
+        if (companyImp.add(company) != 0){
+            return company;
         }
         return null;
     }
-
-
-
-
 
 
 }

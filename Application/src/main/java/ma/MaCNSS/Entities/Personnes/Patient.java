@@ -15,6 +15,11 @@ public class Patient  extends Personne {
         this.immatricule = immatricule;
     }
 
+    public Patient(String immatricule,AgentCNSS agentCNSS) {
+        super(agentCNSS.getCIN(), agentCNSS.getNom(), agentCNSS.getPrenom(), agentCNSS.getVille(), agentCNSS.getTelephone(), agentCNSS.getEmail(), agentCNSS.getPassword(), agentCNSS.getGenre());
+        this.immatricule = immatricule;
+    }
+
     public String getImmatricule() {
         return immatricule;
     }
