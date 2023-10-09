@@ -153,7 +153,7 @@ public class EmployeeServices {
 
         if (workDays < 1320){
             System.out.println("Your points !enought for the retrainment");
-            System.err.println(TextColor.yellowText("GOO BACK TO THE FUCKING WORK"));
+            System.err.println(TextColor.yellowText("GOO BACK TO THE WORK"));
             return false;
         }
         return true;
@@ -182,14 +182,15 @@ public class EmployeeServices {
             float last96MonthsSalaryAvg = employeeCareerImp.getLast96MonthsSalaryAvg(immatricule);
             retrainmentSalary = last96MonthsSalaryAvg * 0.5F;
 
+            if (retrainmentSalary < 1000){
+                retrainmentSalary = 1000;
+            } else if (retrainmentSalary > 6000) {
+                retrainmentSalary = 6000;
+            }
             System.out.println("Your Retrainment Salary is " + retrainmentSalary);
         }
 
-        if (retrainmentSalary < 1000){
-            retrainmentSalary = 1000;
-        } else if (retrainmentSalary > 6000) {
-            retrainmentSalary = 6000;
-        }
+
         return  retrainmentSalary;
     }
 
@@ -205,10 +206,10 @@ public class EmployeeServices {
 
             int years = age.getYears();
             if (years >= 55){
-                System.out.println(TextColor.greenText("mbrouk l wld lmima, db moumkin t9ross l7it ykhorjo l floass HAHAHAHAHA..."));
+                System.out.println(TextColor.greenText("Yes you can take your money"));
                 can = true;
             }else{
-                System.out.println(TextColor.yellowText("wa sbaaar a m3alem ra yallah 3andek " + years + "3am"));
+                System.out.println(TextColor.yellowText("Your have " + years + " years old, you must have at least 55 years old"));
             }
         }catch (SQLException ex){
             System.out.println(ex.getMessage());

@@ -44,7 +44,7 @@ import java.awt.*;
 import java.awt.image.Raster;
 
 public class Main {
-    private static final java.util.Scanner scanner = new java.util.Scanner(System.in);
+//    private static final java.util.Scanner scanner = new java.util.Scanner(System.in);
 
     public static void main(String[] args) {
         int choice;
@@ -143,10 +143,10 @@ public class Main {
                     try {
                         // => LOGIN
                         Patient patient = new Patient();
-//                        patient = PatientServices.login();
-//                        if (patient == null) {
-//                            break;
-//                        }
+                        patient = PatientServices.login();
+                        if (patient == null) {
+                            break;
+                        }
                         System.out.println("Welcome Patien Agent 💪🏼");
 
                         do {
@@ -163,7 +163,6 @@ public class Main {
                                     if (hasRetrainment) {
                                         float RetraitmentSalary = EmployeeServices.RetraitmentSalary(patient.getImmatricule());
                                         if (RetraitmentSalary > 0) {
-                                            System.out.print("Can I take money: ");
                                             System.out.println(EmployeeServices.canTakeMoney(patient.getImmatricule()));
                                         }
                                     }
@@ -182,12 +181,12 @@ public class Main {
                     try {
                         // => LOGIN
                         Company company = new Company();
-//                        company = CompanyServices.login();
-//                        if (company == null) {
-//                            break;
-//                        }
+                        company = CompanyServices.login();
+                        if (company == null) {
+                            break;
+                        }
                         CompanyImp companyImp = new CompanyImp();
-                        company = companyImp.getCompany("ESD2023");
+//                        company = companyImp.getCompany("ESD2023");
                         System.out.println("Welcome " + company.getName() + " 💪🏼");
 
                         // SUBMENU => Manage employees

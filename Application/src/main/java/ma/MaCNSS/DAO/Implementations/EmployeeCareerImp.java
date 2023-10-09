@@ -155,7 +155,7 @@ public class EmployeeCareerImp  {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, immatricule);
             ResultSet resultSet = ps.executeQuery();
-            Map<Integer, Float> salaries = new HashMap<>();
+                Map<Integer, Float> salaries = new HashMap<>();
             int rowCount = 0;
 
             while (resultSet.next()) {
