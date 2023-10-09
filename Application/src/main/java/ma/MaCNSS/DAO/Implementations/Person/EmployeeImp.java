@@ -1,11 +1,7 @@
 package ma.MaCNSS.DAO.Implementations.Person;
 
 import ma.MaCNSS.Connection.DBConnection;
-import ma.MaCNSS.DAO.Implementations.Documents.AnalyseImp;
 import ma.MaCNSS.DAO.Interfaces.Person.EmployeeInterface;
-import ma.MaCNSS.Entities.Documents.Analyse;
-import ma.MaCNSS.Entities.Dossier;
-import ma.MaCNSS.Entities.Personnes.AgentCNSS;
 import ma.MaCNSS.Entities.Personnes.Employee;
 import ma.MaCNSS.Helpers.TextColor;
 import ma.MaCNSS.enums.Genre;

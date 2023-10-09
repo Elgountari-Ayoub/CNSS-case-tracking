@@ -32,7 +32,7 @@ public class UI {
         System.out.println(
                 TextColor.yellowText(
                         "\t1- Display my files\n" +
-                                "\t2 - Check retirement" +
+                                "\t2 - Check retirement\n" +
                                 "\t0- Go back"));
     }
 

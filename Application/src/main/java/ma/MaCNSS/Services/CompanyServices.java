@@ -62,7 +62,7 @@ public class CompanyServices {
                                     int userInput = PmScanner.takeIntInputValue("Enter verification code: ");
                                     if (userInput == randomNumber) {
                                         System.out.println("Connected successfully");
-                                        return company;
+                                        return loggedCompany;
                                     } else {
                                         System.out.println(TextColor.yellowText("Wrong verification code!"));
                                     }
@@ -106,7 +106,9 @@ public class CompanyServices {
         password = PmScanner.takeStringInputValue("Password: ");
 
         company =  new Company(matricule, name, email, password);
-        if (companyImp.add(company) != 0){
+        int row = companyImp.add(company);
+        System.out.println(row);
+        if (row != 0){
             return company;
         }
         return null;

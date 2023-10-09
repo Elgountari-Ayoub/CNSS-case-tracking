@@ -1,5 +1,6 @@
 package ma.MaCNSS;
 
+import ma.MaCNSS.DAO.Implementations.CompanyImp;
 import ma.MaCNSS.DAO.Implementations.Documents.AnalyseImp;
 import ma.MaCNSS.DAO.Implementations.Documents.OrdonnanceImp;
 import ma.MaCNSS.DAO.Implementations.Documents.RadioImp;
@@ -142,10 +143,10 @@ public class Main {
                     try {
                         // => LOGIN
                         Patient patient = new Patient();
-                        patient = PatientServices.login();
-                        if (patient == null) {
-                            break;
-                        }
+//                        patient = PatientServices.login();
+//                        if (patient == null) {
+//                            break;
+//                        }
                         System.out.println("Welcome Patien Agent 💪🏼");
 
                         do {
@@ -157,7 +158,16 @@ public class Main {
                                     PatientServices.getDossiers(patient);
                                     break;
                                 case 2:
-                                    EmployeeServices.hasRetrainment(patient.getImmatricule());
+                                    patient.setImmatricule("imat1111");
+                                    boolean hasRetrainment = EmployeeServices.hasRetrainment(patient.getImmatricule());
+                                    if (hasRetrainment) {
+                                        float RetraitmentSalary = EmployeeServices.RetraitmentSalary(patient.getImmatricule());
+                                        if (RetraitmentSalary > 0) {
+                                            System.out.print("Can I take money: ");
+                                            System.out.println(EmployeeServices.canTakeMoney(patient.getImmatricule()));
+                                        }
+                                    }
+
                                     break;
                             }
                         } while (choice != 0);
@@ -176,6 +186,8 @@ public class Main {
 //                        if (company == null) {
 //                            break;
 //                        }
+                        CompanyImp companyImp = new CompanyImp();
+                        company = companyImp.getCompany("ESD2023");
                         System.out.println("Welcome " + company.getName() + " 💪🏼");
 
                         // SUBMENU => Manage employees
@@ -199,7 +211,7 @@ public class Main {
                                 case 2:
                                     try {
                                         EmployeeServices.updatePresenceStatus();
-                                    }catch (Exception ex){
+                                    } catch (Exception ex) {
                                         System.out.println(ex.getMessage());
                                     }
                             }

@@ -49,6 +49,26 @@ public class CompanyImp implements CompanyInterface {
 
     @Override
     public Company getCompany(String matricule) throws SQLException {
+        String sql = "SELECT * FROM company WHERE matricule = ?";
+        Company company = new Company();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setString(1, matricule);
+
+            ResultSet resultSet =  ps.executeQuery();
+
+            if (resultSet.next()){
+                String name, email, password;
+                name = resultSet.getString("name");
+                email = resultSet.getString("email");
+                password = resultSet.getString("password");
+
+                return new Company(matricule, name, email, password);
+            }
+        }catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
         return null;
     }
 

@@ -139,6 +139,7 @@ public class EmployeeServices {
                 employeeCareerImp.add(employeeCareer);
 
             } while (patient == null && employee == null);
+            return employee;
 
         } catch (Exception ex) {
             System.out.println(TextColor.yellowText(ex.getMessage()));
@@ -182,6 +183,12 @@ public class EmployeeServices {
             retrainmentSalary = last96MonthsSalaryAvg * 0.5F;
 
             System.out.println("Your Retrainment Salary is " + retrainmentSalary);
+        }
+
+        if (retrainmentSalary < 1000){
+            retrainmentSalary = 1000;
+        } else if (retrainmentSalary > 6000) {
+            retrainmentSalary = 6000;
         }
         return  retrainmentSalary;
     }
