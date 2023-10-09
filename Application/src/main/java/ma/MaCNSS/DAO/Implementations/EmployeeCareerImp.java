@@ -12,7 +12,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EmployeeCareerImp  {
     static Connection con = DBConnection.getConnection();
@@ -146,29 +148,33 @@ public class EmployeeCareerImp  {
         }
         return workDays;
     }
-    public float getLast96MonthsSalaryAvg(String immatricule){
-        float salary = 0, salaryAvg = 0;
+    public float getLast96MonthsSalaryAvg(String immatricule) {
+        String sql = "SELECT salary FROM employeeCareer WHERE immatricule = ? ORDER BY salary DESC LIMIT 96";
 
-        String sql = "\n" +
-                "Select salary from employeeCareer where immatricule = ? order by salary desc limit 96";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-
             ps.setString(1, immatricule);
             ResultSet resultSet = ps.executeQuery();
-
+            Map<Integer, Float> salaries = new HashMap<>();
             int rowCount = 0;
 
-            while (resultSet.next()){
-                salary += resultSet.getFloat("salary");
+            while (resultSet.next()) {
+                float salary = resultSet.getFloat("salary");
+                salaries.put(rowCount, salary);
                 rowCount++;
             }
-            salaryAvg = salary / rowCount;
 
-        }catch (SQLException ex){
+            float salaryAvg = (float) salaries.values().stream()
+                    .mapToDouble(Float::doubleValue)
+                    .average()
+                    .orElse(0);
+
+            return salaryAvg;
+
+        } catch (SQLException ex) {
             System.out.println(TextColor.yellowText(ex.getMessage()));
+            return 0;
         }
-        return salaryAvg;
     }
 
 

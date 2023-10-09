@@ -205,10 +205,10 @@ public class EmployeeServices {
 
             int years = age.getYears();
             if (years >= 55){
-                System.out.println("mbrouk l wld lmima, db moumkin t9ross l7it ykhorjo l floass HAHAHAHAHA...");
+                System.out.println(TextColor.greenText("mbrouk l wld lmima, db moumkin t9ross l7it ykhorjo l floass HAHAHAHAHA..."));
                 can = true;
             }else{
-                System.out.println("wa sbaaar a m3alem ra yallah 3andek " + years + "3am");
+                System.out.println(TextColor.yellowText("wa sbaaar a m3alem ra yallah 3andek " + years + "3am"));
             }
         }catch (SQLException ex){
             System.out.println(ex.getMessage());
